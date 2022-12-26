@@ -1,0 +1,279 @@
+{
+    "Ethereum": {
+        "Bridge": {
+            "cBridge": "0x5427fefa711eff984124bfbb1ab6fbf5e3da1820",
+            "Connext": "0x31efc4aeaa7c39e54a33fdc3c46ee2bd70ae0a09",
+            "Synapse-old": "0x1116898dda4015ed8ddefb84b6e8bc24528af2d8",
+            "Synapse": "0x2796317b0ff8538f253012862c06787adfb8ceb6",
+            "Hashflow": "0xcc5ab3f04704620d6f20a0cf2e772d6a81f42c4b",
+            "Stargate": "0xdf0770df86a8034b3efef0a1bb3c889b8332ff56",
+            "O3": "0xecf2b548e5c21028b0b60363207700fa421b6ecb",
+            "Nomad": "0x88a69b4e698a4b090df6cf5bd7b2d47325ad30a3",
+            "Allbridge": "0xbbbd1bbb4f9b936c3604906d7592a644071de884",
+            "Across": "0x4d9079bb4165aeb4084c526a32695dcfd2f77381",
+            "Router": "0x6e14f48576265272b6caa3a7cc500a26050be64e",
+            "Orbiter": "0x41d3d33156ae7c62c094aae2995003ae63f587b3",
+            "Multichain": [
+                "0x7ea2be2df7ba6e54b1a9c70676f668455e329d29",
+                "0x22648c12acd87912ea1710357b1302c6a4154ebc",
+                "0x739ca6d71365a08f584c8fc4e1029045fa8abc4b",
+                "0xd13eb71515dc48a8a367d12f844e5737bab415df"
+            ],
+            "Hop": [
+                "0x3666f603cc164936c1b87e207f36beba4ac5f18a",
+                "0x3e4a3a4796d16c0cd582c382691998f7c06420b6",
+                "0x3d4cc8a61c7528fd86c55cfe061a78dcba48edd1"
+            ]
+        },
+        "Aggragator": {
+            "Lifi": "0x1231deb6f5749ef6ce6943a275a1d3e7486f4eae"
+        },
+        "Contract": {
+            "WETH": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+            "USDC": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "USDT": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+            "DAI": "0x6b175474e89094c44da98b954eedeac495271d0f",
+            "BUSD": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
+            "FRAX": "0x853d955acef822db058eb8505911ed77f175b99e",
+            "nUSD": "0x1b84765de8b7566e4ceaf4d0fd3c5af52d3dde4f"
+        }
+    },
+    "BSC": {
+        "Bridge": {
+            "cBridge": "0xdd90e5e87a2081dcf0391920868ebc2ffb81a1af",
+            "Connext": "0x2a9ea5e8cddf40730f4f4f839f673a51600c314e",
+            "Synapse-old": "0x28ec0b36f0819ecb5005cab836f4ed5a2eca4d13",
+            "Synapse": "0x0000000000000000000000000000000000000000",
+            "Meson": "0xfd2236a956bea85ba619789aaf72c789853d49c7",
+            "Stargate": "0x98a5737749490856b401db5dc27f522fc314a4e1",
+            "O3": "0xccb7a45e36f22ede66b6222a0a55c547e6d516d7",
+            "Allbridge": "0xbbbd1bbb4f9b936c3604906d7592a644071de884",
+            "Router": "0x6e14f48576265272b6caa3a7cc500a26050be64e",
+            "Multichain": [
+                "0x8965349fb649a33a30cbfda057d8ec2c48abe2a2",
+                "0xedf0c420bc3b92b961c6ec411cc810ca81f5f21a",
+                "0x1282911d3600b202698997f61f46379db3b9f01e",
+                "0xab7efd5333f5a636488cda6f8c1b5a128977ab93",
+                "0xcdf2c63d05a62898a6b86850c9d06e0621f9977f"
+            ]
+        },
+        "Aggragator": {
+            "Lifi": "0x1231deb6f5749ef6ce6943a275a1d3e7486f4eae"
+        },
+        "Contract": {
+            "WETH": "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+            "USDC": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+            "USDT": "0x55d398326f99059ff775485246999027b3197955",
+            "DAI": "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+            "BUSD": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+            "FRAX": "0x90c97f71e18723b0cf0dfa30ee176ab653e89f40",
+            "nUSD": "0x23b891e5c62e0955ae2bd185990103928ab817b3"
+        }
+    },
+    "Polygon": {
+        "Bridge": {
+            "cBridge": "0x88dcdc47d2f83a99cf0000fdf667a468bb958a78",
+            "Connext": "0x6090de2ec76eb1dc3b5d632734415c93c44fd113",
+            "Synapse-old": "0x85fcd7dd0a1e1a9fcd5fd886ed522de8221c3ee5",
+            "Synapse": "0x0000000000000000000000000000000000000000",
+            "Meson": "0xc29a08368604567237f8a396428e2bf5332a7686",
+            "Hashflow": "0xdb654136fd25246736872c3a4c751075e7a3f79a",
+            "Stargate": "0x1205f31718499dbf1fca446663b532ef87481fe1",
+            "O3": "0xa9472da7e5f349a59c074e059ef0ab504735dfa2",
+            "Allbridge": "0xbbbd1bbb4f9b936c3604906d7592a644071de884",
+            "Across": "0x69b5c72837769ef1e7c164abc6515dcff217f920", 
+            "Router": "0x6e14f48576265272b6caa3a7cc500a26050be64e",
+            "Multichain": [
+                "0xd69b31c3225728cc57ddaf9be532a4ee1620be51",
+                "0xe3eeda11f06a656fcaee19de663e84c7e61d3cac",
+                "0x9b17baadf0f21f03e35249e0e59723f34994f806"
+            ],
+            "Hop": [
+                "0x5c32143c8b198f392d01f8446b754c181224ac26",
+                "0xb2f7d27b21a69a033f85c42d5eb079043baadc81",
+                "0x25fb92e505f752f730cad0bd4fa17ece4a384266"
+            ]
+        },
+        "Aggragator": {
+            "Lifi": "0x1231deb6f5749ef6ce6943a275a1d3e7486f4eae"
+        },
+        "Contract": {
+            "WETH": "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+            "USDC": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+            "USDT": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+            "DAI": "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+            "BUSD": "0xdab529f40e671a1d4bf91361c21bf9f0c9712ab7",
+            "FRAX": "0x45c32fa6df82ead1e2ef74d17b76547eddfaff89",
+            "nUSD": "0xb6c473756050de474286bed418b77aeac39b02af"
+        }
+    },
+    "Fantom": {
+        "Bridge": {
+            "cBridge": "0x374b8a9f3ec5eb2d97eca84ea27aca45aa1c57ef",
+            "Connext": "0x0d29d9fa94a23e0d2f06efc79c25144a8f51fc4b",
+            "Synapse-old": "0x85662fd123280827e11c59973ac9fcbe838dc3b4",
+            "Synapse": "0x0000000000000000000000000000000000000000",
+            "Meson": "0x40dbb93f63d69a5da840f7092988317cb4c55399",
+            "Stargate": "0x12edeA9cd262006cC3C4E77c90d2CD2DD4b1eb97",
+            "Allbridge": "0xbbbd1bbb4f9b936c3604906d7592a644071de884",
+            "Router": "0x6e14f48576265272b6caa3a7cc500a26050be64e",
+            "Multichain": [
+                "0x95bf7e307bc1ab0ba38ae10fc27084bc36fcd605",
+                "0x2823d10da533d9ee873fed7b16f4a962b2b7f181",
+                "0xd652776de7ad802be5ec7bebfafda37600222b48",
+                "0xbdba76fa2659c33ffcc2b0bc134c3a2c8a3aa94d"
+            ]
+        },
+        "Aggragator": {
+            "Lifi": "0x1231deb6f5749ef6ce6943a275a1d3e7486f4eae"
+        },
+        "Contract": {
+            "USDC": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+            "USDT": "0x049d68029688eabf473097a2fc38ef61633a3c7a",
+            "DAI": "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+            "FRAX": "0xaf319e5789945197e365e7f7fbfc56b130523b33",
+            "nUSD": "0xed2a7edd7413021d440b09d654f3b87712abab66"
+        }
+    },
+    "Avalanche": {
+        "Bridge": {
+            "cBridge": "0xef3c714c9425a8f3697a9c969dc1af30ba82e5d4",
+            "Connext": "0x31efc4aeaa7c39e54a33fdc3c46ee2bd70ae0a09",
+            "Synapse-old": "0xed2a7edd7413021d440b09d654f3b87712abab66",
+            "Synapse": "0x0000000000000000000000000000000000000000",
+            "Meson": "0x40dbb93f63d69a5da840f7092988317cb4c55399",
+            "Hashflow": "0x52c3cac381faf7ac75a37fa9be6112a38402f984",
+            "Stargate": "0x1205f31718499dbf1fca446663b532ef87481fe1",
+            "Allbridge": "0xbbbd1bbb4f9b936c3604906d7592a644071de884",
+            "Router": "0x6e14f48576265272b6caa3a7cc500a26050be64e",
+            "Multichain": [
+                "0xcc9b1f919282c255eb9ad2c0757e8036165e0cad",
+                "0x94977c9888f3d2fafae290d33fab4a5a598ad764",
+                "0xd4143e8db48a8f73afcdf13d7b3305f28da38116"
+            ]
+        },
+        "Aggragator": {
+            "Lifi": "0x1231deb6f5749ef6ce6943a275a1d3e7486f4eae"
+        },
+        "Contract": {
+            "WETH": "0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab",
+            "USDC": "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+            "USDT": "0xc7198437980c041c805a1edcba50c1ce5db95118",
+            "DAI": "0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
+            "BUSD": "0x19860ccb0a68fd4213ab9d8266f7bbf05a8dde98",
+            "FRAX": "0xd24c2ad096400b6fbcd2ad8b24e7acbc21a1da64",
+            "USDC2": "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
+            "USDT2": "0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7",
+            "nUSD": "0xcfc37a6ab183dd4aed08c204d1c2773c0b1bdf46"
+        }
+    },
+    "Arbitrum": {
+        "Bridge": {
+            "cBridge": "0x1619de6b6b20ed217a58d00f37b9d47c7663feca",
+            "Connext": "0xcf4d2994088a8cde52fb584fe29608b63ec063b2",
+            "Synapse-old": "0x9dd329f5411466d9e0c488ff72519ca9fef0cb40",
+            "Synapse": "0x0000000000000000000000000000000000000000",
+            "Meson": "0xf7c86a5e1323e6efb954b2e65ebba9c300c40f38",
+            "Stargate": "0xb6cfcf89a7b22988bfc96632ac2a9d6dab60d641",
+            "O3": "0x446eb3ac5e6267931ed1198203b12cafcd2e6240",
+            "Across": "0xb88690461ddbab6f04dfad7df66b7725942feb9c",
+            "Router": "0x6e14f48576265272b6caa3a7cc500a26050be64e",
+            "Multichain": [
+                "0x3405a1bd46b85c5c029483fbecf2f3e611026e45",
+                "0x05e481b19129b560e921e487adb281e70bdba463",
+                "0xaef9e3e050d0ef060cdfd5246209b0b6bb66060f"
+            ],
+            "Hop": [
+                "0x10541b07d8ad2647dc6cd67abd4c03575dade261",
+                "0x18f7402b673ba6fb5ea4b95768aabb8aad7ef18a",
+                "0xa5a33ab9063395a90ccbea2d86a62eccf27b5742"
+            ]
+        },
+        "Aggragator": {
+            "Lifi": "0x1231deb6f5749ef6ce6943a275a1d3e7486f4eae"
+        },
+        "Contract": {
+            "WETH": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+            "USDC": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+            "USDT": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+            "DAI": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+            "FRAX": "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+            "nUSD": "0x2913e812cf0dcca30fb28e6cac3d2dcff4497688"
+        }
+    },
+    "Boba": {
+        "Bridge": {
+            "cBridge": "0x841ce48f9446c8e281d3f1444cb859b4a6d0738c",
+            "Connext": "0x31efc4aeaa7c39e54a33fdc3c46ee2bd70ae0a09",
+            "Synapse-old": "0x75ff037256b36f15919369ac58695550be72fead",
+            "Synapse": "0x0000000000000000000000000000000000000000"
+        },
+        "Contract": {
+            "USDC": "0x66a2a913e447d6b4bf33efbec43aaef87890fbbc",
+            "USDT": "0x5de1677344d3cb0d7d465c10b72a8f60699c062d",
+            "DAI": "0xf74195bb8a5cf652411867c5c2c5b8c2a402be35",
+            "BUSD": "0x461d52769884ca6235b685ef2040f47d30c94eb5",
+            "nUSD": "0x6b4712ae9797c199edd44f897ca09bc57628a1cf"
+        }
+    },
+    "Moonbeam": {
+        "Bridge": {
+            "cBridge": "0x841ce48f9446c8e281d3f1444cb859b4a6d0738c",
+            "Connext": "0x31efc4aeaa7c39e54a33fdc3c46ee2bd70ae0a09",
+            "Meson": "0x18fb44c778dbc53f706bf12d9fc40a07e93b7015",
+            "Nomad": "0x0000000000000000000000000000000000000000",
+            "Multichain": [
+                "0x1ccca1ce62c62f7be95d4a67722a8fdbed6eecb4",
+                "0x0000000000000000000000000000000000000000"
+            ]
+        },
+        "Aggragator": {
+            "Lifi": "0x1231deb6f5749ef6ce6943a275a1d3e7486f4eae"
+        },
+        "Contract": {
+            "multiUSDC": "0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b",
+            "multiUSDT": "0xefaeee334f0fd1712f9a8cc375f427d9cdd40d73",
+            "multiDAI": "0x765277eebeca2e31912c9946eae1021199b39c61",
+            "multiBUSD": "0xa649325aa7c5093d12d6f98eb4378deae68ce23f",
+            "FRAX": "0x322e86852e492a7ee17f28a78c663da38fb33bfb",
+            "WETH": "0x30d2a9f5fdf90ace8c17952cbb4ee48a55d916a7",
+            "USDC": "0x8f552a71efe5eefc207bf75485b356a0b3f01ec9",
+            "USDT": "0x8e70cd5b4ff3f62659049e74b6649c6603a0e594",
+            "DAI": "0xc234a67a4f840e61ade794be47de455361b52413"
+        }
+    },
+    "Moonriver": {
+        "Bridge": {
+            "cBridge": "0x841ce48f9446c8e281d3f1444cb859b4a6d0738c",
+            "Connext": "0x373ba9aa0f48b27a977f73423039e6de341a0c7c",
+            "Meson": "0xf7c86a5e1323e6efb954b2e65ebba9c300c40f38",
+            "Multichain": "0x0000000000000000000000000000000000000000"
+        },
+        "Aggragator": {
+            "Lifi": "0x1231deb6f5749ef6ce6943a275a1d3e7486f4eae"
+        },
+        "Contract": {
+            "USDC": "0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d",
+            "USDT": "0xb44a9b6905af7c801311e8f4e76932ee959c663c",
+            "DAI": "0x80a16016cc4a2e6a2caca8a4a498b1699ff0f844",
+            "BUSD": "0x5d9ab5522c64e1f6ef5e3627eccc093f56167818",
+            "FRAX": "0x965f84d915a9efa2dd81b653e3ae736555d945f4"
+        }
+    },
+    "Harmony": {
+        "Bridge": {
+            "cBridge": "0x78a21c1d3ed53a82d4247b9ee5bf001f4620ceec",
+            "Connext": "0x31efc4aeaa7c39e54a33fdc3c46ee2bd70ae0a09",
+            "Synapse-old": "0x3ea9b0ab55f34fb188824ee288ceaefc63cf908e",
+            "Meson": "0xf7c86a5e1323e6efb954b2e65ebba9c300c40f38"
+        },
+        "Contract": {
+            "WETH": "0x6983d1e6def3690c4d616b13597a09e6193ea013",
+            "USDC": "0x985458e523db3d53125813ed68c274899e9dfab4",
+            "USDT": "0x3c2b8be99c50593081eaa2a724f0b8285f5aba8f",
+            "DAI": "0xef977d2f931c1978db5f6747666fa1eacb0d0339",
+            "BUSD": "0xe176ebe47d621b984a73036b9da5d834411ef734",
+            "FRAX": "0xfa7191d292d5633f702b0bd7e3e3bccc0e633200"
+        }
+    }
+}
