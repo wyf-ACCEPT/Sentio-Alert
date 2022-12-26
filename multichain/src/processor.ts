@@ -23,7 +23,7 @@ const addressMap: { [index: number]: [number, string[], [string, string, number]
       ['anyETH', '0xdebb1d6a2196f2335ad51fbde7ca587205889360', 18],
       ['anyUSDC', '0x8965349fb649a33a30cbfda057d8ec2c48abe2a2', 18],
       ['anyUSDT', '0x58340a102534080b9d3175f868aea9f6af986dd9', 18],
-      ['anyUSDT', '0xedf0c420bc3b92b961c6ec411cc810ca81f5f21a', 18],  // 2 types of anyUSDT in BSC!
+      ['anyUSDT2', '0xedf0c420bc3b92b961c6ec411cc810ca81f5f21a', 18],  // 2 types of anyUSDT in BSC!
     ]
   ],
   // 137: [  // Polygon
@@ -42,7 +42,7 @@ const handleSupply = function (tokenName: string, decimal: number) {
 
 for (const [chainId, [blockNumber, routerList, tokenList]] of Object.entries(addressMap)) {
   for (var [tokenName, tokenAddr, decimal] of tokenList) {
-    AnytokenProcessor.bind({ address: tokenAddr, network: Number(chainId), startBlock: blockNumber })
+    AnytokenProcessor.bind({ address: tokenAddr, network: Number(chainId), startBlock: 0 })
       .onBlock(handleSupply(tokenName, decimal))
   }
 }
