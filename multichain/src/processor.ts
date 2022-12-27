@@ -75,22 +75,20 @@ const addressMap: { [index: number]: [number, string[], [string, string, number]
   ],
 }
 
-
-
-const handleSupply = function (tokenName: string, decimal: number) {
+const handleSupply = function (chainId: number, tokenName: string, decimal: number) {
+  const chainName = chain.getChainName(chainId)
   return async function (_: any, ctx: AnytokenContext) {
     const supply = scaleDown(await ctx.contract.totalSupply(), decimal)
-    ctx.meter.Gauge("TotalSupply").record(supply, { "name": tokenName })
+    ctx.meter.Gauge("TotalSupply").record(supply, { "token": tokenName, "loc": chainName })
   }
 }
 
 for (const [chainId, [blockNumber, routerList, tokenList]] of Object.entries(addressMap)) {
   for (var [tokenName, tokenAddr, decimal] of tokenList) {
-    AnytokenProcessor.bind({ address: tokenAddr, network: Number(chainId), startBlock: 0 })
-      .onBlock(handleSupply(tokenName, decimal))
+    AnytokenProcessor.bind({ address: tokenAddr, network: Number(chainId)})
+      .onBlock(handleSupply(Number(chainId), tokenName, decimal))
   }
 }
-
 
 // const handleSwapIn = function (chainId: string, tokenName: string, decimal: number) {
 //   return async function (event: LogAnySwapInEvent, ctx: Multichain_routerContext) {
