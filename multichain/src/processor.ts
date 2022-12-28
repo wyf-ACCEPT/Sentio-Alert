@@ -83,32 +83,37 @@ const handleSupply = function (chainId: number, tokenName: string, decimal: numb
   }
 }
 
-for (const [chainId, [blockNumber, routerList, tokenList]] of Object.entries(addressMap)) {
-  for (var [tokenName, tokenAddr, decimal] of tokenList) {
-    AnytokenProcessor.bind({ address: tokenAddr, network: Number(chainId)})
-      .onBlock(handleSupply(Number(chainId), tokenName, decimal))
+const handleSwapIn = function (chainId: string, tokenName: string, decimal: number) {
+  const chainName = chain.getChainName(chainId)
+  return async function (event: LogAnySwapInEvent, ctx: Multichain_routerContext) {
+    const inAmount = scaleDown(event.args.amount, decimal)
+    ctx.meter.Gauge('anyswapIn').record(inAmount, { "from": chain.getChainName(event.args.fromChainID.toString()), "loc": chainName, "token": tokenName })
   }
 }
 
-// const handleSwapIn = function (chainId: string, tokenName: string, decimal: number) {
-//   return async function (event: LogAnySwapInEvent, ctx: Multichain_routerContext) {
-//     const inAmount = scaleDown(event.args.amount, decimal)
-//     ctx.meter.Gauge('anyswapIn').record(inAmount, { "from": chain.getChainName(event.args.fromChainID.toString()), "to": chain.getChainName(chainId), "token": tokenName })
-//     ctx.meter.Counter('netOutFlow').sub(inAmount, { "location": chain.getChainName(chainId), "token": tokenName })
-//     ctx.meter.Counter('netOutFlow').add(inAmount, { "location": chain.getChainName(event.args.fromChainID.toString()), "token": tokenName })
-//   }
-// }
+const handleSwapOut = function (chainId: string, tokenName: string, decimal: number) {
+  const chainName = chain.getChainName(chainId)
+  return async function (event: LogAnySwapOutEvent, ctx: Multichain_routerContext) {
+    const outAmount = scaleDown(event.args.amount, decimal)
+    ctx.meter.Gauge('anyswapOut').record(outAmount, { "to": chain.getChainName(event.args.toChainID.toString()), "loc": chainName, "token": tokenName })
+  }
+}
 
-// for (const [chainId, [blockNumber, routerList, tokenList]] of Object.entries(addressMap)) {
-//   for (var routerAddress of routerList) {
-//     for (var [tokenName, tokenAddress, tokenDecimal] of tokenList) {
-//       Multichain_routerProcessor
-//         .bind({ address: routerAddress, network: Number(chainId), startBlock: blockNumber })
-//         .onEventLogAnySwapIn(
-//           handleSwapIn(chainId, tokenName, tokenDecimal),
-//           Multichain_routerProcessor.filters.LogAnySwapIn(null, tokenAddress)
-//         )
-//     }
-//   }
-// }
-
+for (const [chainId, [blockNumber, routerList, tokenList]] of Object.entries(addressMap)) {
+  for (var [tokenName, tokenAddr, decimal] of tokenList) {
+    AnytokenProcessor.bind({ address: tokenAddr, network: Number(chainId) })
+      .onBlock(handleSupply(Number(chainId), tokenName, decimal))
+    for (var routerAddress of routerList) {
+      Multichain_routerProcessor
+        .bind({address: routerAddress, network: Number(chainId)})
+        .onEventLogAnySwapIn(
+          handleSwapIn(chainId, tokenName, decimal),
+          Multichain_routerProcessor.filters.LogAnySwapIn(null, tokenAddr)
+        )
+        .onEventLogAnySwapOut(
+          handleSwapOut(chainId, tokenName, decimal),
+          Multichain_routerProcessor.filters.LogAnySwapOut(tokenAddr)
+        )
+    }
+  }
+}
