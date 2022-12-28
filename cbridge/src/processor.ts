@@ -1,4 +1,4 @@
-import { token } from '@sentio/sdk/lib/utils'
+import { token, chain } from '@sentio/sdk/lib/utils'
 import { CbridgeContext, CbridgeProcessor, SendEvent, RelayEvent } from './types/cbridge'
 
 const tokenAddressList: { [index: number]: [string, string, number][] } = {
@@ -52,3 +52,44 @@ const tokenAddressList: { [index: number]: [string, string, number][] } = {
   ],
 }
 
+const cBridgeAddressList: { [index: number]: string } = {
+  1: "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
+  10: "0x9D39Fc627A6d9d9F8C831c16995b209548cc3401",
+  56: "0xdd90E5E87A2081Dcf0391920868eBc2FFB81a1aF",
+  137: "0x88DCDC47D2f83a99CF0000FDF667A468bB958a78",
+  42161: "0x1619DE6B6B20eD217a58d00f37B9d47C7663feca",
+  43114: "0xef3c714c9425a8F3697A9C969Dc1af30ba82e5d4",
+}
+
+const handleSwapIn = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
+  const chainName = chain.getChainName(chainId)
+  return async function (event: RelayEvent, ctx: CbridgeContext) {
+    const inAmount = token.scaleDown(event.args.amount, decimal)
+    if (event.args.token == tokenAddr) {
+      ctx.meter.Gauge('transfer_in').record(inAmount, { "from": chain.getChainName(event.args.srcChainId.toString()), "loc": chainName, "token": tokenName })
+    }
+  }
+}
+
+const handleSwapOut = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
+  const chainName = chain.getChainName(chainId)
+  return async function (event: SendEvent, ctx: CbridgeContext) {
+    const outAmount = token.scaleDown(event.args.amount, decimal)
+    if (event.args.token == tokenAddr) {
+      ctx.meter.Gauge('transfer_out').record(outAmount, { "to": chain.getChainName(event.args.dstChainId.toString()), "loc": chainName, "token": tokenName })
+    }
+  }
+}
+
+for (var [chainId, cBridgeAddress] of Object.entries(cBridgeAddressList)) {
+  const tokenList = tokenAddressList[Number(chainId)]
+  for (var [tokenName, tokenAddr, decimal] of tokenList) {
+    CbridgeProcessor.bind({ address: cBridgeAddress, network: Number(chainId) })
+      .onEventSend(
+        handleSwapOut(chainId, tokenName, decimal, tokenAddr)
+      )
+      .onEventRelay(
+        handleSwapIn(chainId, tokenName, decimal, tokenAddr)
+      )
+  }
+}
