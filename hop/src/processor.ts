@@ -10,13 +10,13 @@ const saddleSwapMap: { [index: number]: [number, [string, string, number][]] } =
     ['DAI', '0xF181eD90D6CfaC84B8073FdEA6D34Aa744B41810', 18],
     ['WETH', '0xaa30D6bba6285d0585722e2440Ff89E23EF68864', 18],
   ]],
-  137: [16000000, [    // Polygon
+  137: [23000000, [    // Polygon: Dec-26-2021 09:53:30 PM +UTC
     ['USDC', '0x5C32143C8B198F392d01f8446b754c181224ac26', 6],
     ['USDT', '0xB2f7d27B21a69a033f85C42d5EB079043BAadC81', 6],
     ['DAI', '0x25FB92E505F752F730cAD0Bd4fa17ecE4A384266', 18],
     ['WETH', '0x266e2dc3C4c59E42AA07afeE5B09E964cFFe6778', 18],
   ]],
-  42161: [15000000, [  // Arbitrum
+  42161: [4000000, [  // Arbitrum: Dec-21-2021 01:46:13 PM +UTC
     ['USDC', '0x10541b07d8Ad2647Dc6cD67abd4c03575dade261', 6],
     ['USDT', '0x18f7402B673Ba6Fb5EA4B95768aABb8aaD7ef18a', 6],
     ['DAI', '0xa5A33aB9063395A90CCbEa2D86a62EcCf27B5742', 18],
@@ -40,7 +40,7 @@ const handleBlock = function (chainId: number, tokenName: string, decimal: numbe
 for (var [chainId, [startBlock, tokens]] of Object.entries(saddleSwapMap)) {
   for (var [tokenName, saddleAddr, decimal] of tokens) {
     HopTokenSwapProcessor
-      .bind({ address: saddleAddr, network: Number(chainId) })
+      .bind({ address: saddleAddr, network: Number(chainId), startBlock: startBlock })
       .onBlock(handleBlock(Number(chainId), tokenName, decimal))
   }
 }
