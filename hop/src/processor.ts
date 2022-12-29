@@ -1,10 +1,12 @@
+import type { Block } from '@ethersproject/providers'
+import type { BigNumber } from "ethers"
 import { scaleDown } from '@sentio/sdk/lib/utils/token'
 import { getChainName } from '@sentio/sdk/lib/utils/chain'
-import { HopBridgeProcessor, HopBridgeContext } from './types/hopbridge'
+import { EthereumDexPrice } from '@sentio/sdk/lib/utils/dex-price'
 import { HopTokenSwapProcessor, HopTokenSwapContext, TokenSwapEvent } from './types/hoptokenswap'
 
 const saddleSwapMap: { [index: number]: [number, [string, string, number][]] } = {
-  10: [29000000, [     // Optimism
+  10: [13474342, [     // Optimism: Jun-29-2022 04:57:45 PM +UTC
     ['USDC', '0x3c0FFAca566fCcfD9Cc95139FEF6CBA143795963', 6],
     ['USDT', '0xeC4B41Af04cF917b54AEb6Df58c0f8D78895b5Ef', 6],
     ['DAI', '0xF181eD90D6CfaC84B8073FdEA6D34Aa744B41810', 18],
@@ -24,14 +26,19 @@ const saddleSwapMap: { [index: number]: [number, [string, string, number][]] } =
   ]],
 }
 
+const EthPrice = 1200
 
 const handleBlock = function (chainId: number, tokenName: string, decimal: number) {
   const chainName = getChainName(chainId)
-  return async function (_: any, ctx: HopTokenSwapContext) {
+  return async function (block: Block, ctx: HopTokenSwapContext) {
     const priceOrigin = scaleDown(await ctx.contract.calculateSwap(0, 1, 10n ** BigInt(decimal)), decimal)
-    const balanceOrigin = scaleDown(await ctx.contract.getTokenBalance(0), decimal)
-    const balanceHWrap = scaleDown(await ctx.contract.getTokenBalance(1), decimal)
+    var balanceOrigin = scaleDown(await ctx.contract.getTokenBalance(0), decimal)
+    var balanceHWrap = scaleDown(await ctx.contract.getTokenBalance(1), decimal)
     ctx.meter.Gauge("price").record(priceOrigin, { "pair": tokenName + '_h' + tokenName, "loc": chainName })
+    if (tokenName == 'WETH') {
+      balanceOrigin = balanceOrigin.multipliedBy(EthPrice)
+      balanceHWrap = balanceHWrap.multipliedBy(EthPrice)
+    }
     ctx.meter.Gauge("pool").record(balanceOrigin, { "token": tokenName, "loc": chainName })
     ctx.meter.Gauge("pool").record(balanceHWrap, { "token": 'h' + tokenName, "loc": chainName })
   }
