@@ -1,4 +1,5 @@
 import { scaleDown } from '@sentio/sdk/lib/utils/token'
+import { getChainName } from '@sentio/sdk/lib/utils/chain'
 import { HopBridgeProcessor, HopBridgeContext } from './types/hopbridge'
 import { HopTokenSwapProcessor, HopTokenSwapContext, TokenSwapEvent } from './types/hoptokenswap'
 
@@ -24,21 +25,22 @@ const saddleSwapMap: { [index: number]: [number, [string, string, number][]] } =
 }
 
 
-const handleBlock = function (tokenName: string, decimal: number) {
+const handleBlock = function (chainId: number, tokenName: string, decimal: number) {
+  const chainName = getChainName(chainId)
   return async function (_: any, ctx: HopTokenSwapContext) {
     const priceOrigin = scaleDown(await ctx.contract.calculateSwap(0, 1, 10n ** BigInt(decimal)), decimal)
     const balanceOrigin = scaleDown(await ctx.contract.getTokenBalance(0), decimal)
     const balanceHWrap = scaleDown(await ctx.contract.getTokenBalance(1), decimal)
-    ctx.meter.Gauge("price").record(priceOrigin, { "pair": tokenName + '_h' + tokenName })
-    ctx.meter.Gauge("pool").record(balanceOrigin, { "token": tokenName })
-    ctx.meter.Gauge("pool").record(balanceHWrap, { "token": 'h' + tokenName })
+    ctx.meter.Gauge("price").record(priceOrigin, { "pair": tokenName + '_h' + tokenName, "loc": chainName })
+    ctx.meter.Gauge("pool").record(balanceOrigin, { "token": tokenName, "loc": chainName })
+    ctx.meter.Gauge("pool").record(balanceHWrap, { "token": 'h' + tokenName, "loc": chainName })
   }
 }
 
 for (var [chainId, [startBlock, tokens]] of Object.entries(saddleSwapMap)) {
   for (var [tokenName, saddleAddr, decimal] of tokens) {
     HopTokenSwapProcessor
-      .bind({ address: saddleAddr, network: Number(chainId), startBlock: startBlock })
-      .onBlock(handleBlock(tokenName, decimal))
+      .bind({ address: saddleAddr, network: Number(chainId) })
+      .onBlock(handleBlock(Number(chainId), tokenName, decimal))
   }
 }
