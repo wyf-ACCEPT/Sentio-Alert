@@ -24,13 +24,13 @@ const saddleSwapMap: { [index: number]: [number, [string, string, number][]] } =
   ]],
 }
 
-// const handleBlock = function (chainId: number, tokenName: string, decimal: number) {
-//   const chainName = getChainName(chainId)
-//   return async function (block: Block, ctx: HopTokenSwapContext) {
-//     const priceOrigin = scaleDown(await ctx.contract.calculateSwap(0, 1, 10n ** BigInt(decimal)), decimal)
-//     ctx.meter.Gauge("price").record(priceOrigin, { "pair": tokenName + '_h' + tokenName, "loc": chainName })
-//   }
-// }
+const handleBlock = function (chainId: number, tokenName: string, decimal: number) {
+  const chainName = getChainName(chainId)
+  return async function (block: Block, ctx: HopTokenSwapContext) {
+    const priceOrigin = scaleDown(await ctx.contract.calculateSwap(0, 1, 10n ** BigInt(decimal)), decimal)
+    ctx.meter.Gauge("price").record(priceOrigin, { "pair": tokenName + '_h' + tokenName, "loc": chainName })
+  }
+}
 
 for (var [chainId, [startBlock, tokens]] of Object.entries(saddleSwapMap)) {
   const chainName = getChainName(chainId)
@@ -38,11 +38,11 @@ for (var [chainId, [startBlock, tokens]] of Object.entries(saddleSwapMap)) {
     HopTokenSwapProcessor
       .bind({ address: saddleAddr, network: Number(chainId), startBlock: startBlock })
       .onBlock(
-        // handleBlock(Number(chainId), tokenName, decimal)
-        async function (block: Block, ctx: HopTokenSwapContext) {
-          const priceOrigin = scaleDown(await ctx.contract.calculateSwap(0, 1, 10n ** BigInt(decimal)), decimal)
-          ctx.meter.Gauge("price").record(priceOrigin, { "pair": tokenName + '_h' + tokenName, "loc": chainName })
-        }
+        handleBlock(Number(chainId), tokenName, decimal)
+        // async function (block: Block, ctx: HopTokenSwapContext) {
+        //   const priceOrigin = scaleDown(await ctx.contract.calculateSwap(0, 1, 10n ** BigInt(decimal)), decimal)
+        //   ctx.meter.Gauge("price").record(priceOrigin, { "pair": tokenName + '_h' + tokenName, "loc": chainName })
+        // }
       )
   }
 }
