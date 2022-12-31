@@ -68,22 +68,20 @@ const handleSwapIn = function (chainId: string, tokenName: string, decimal: numb
   }
 }
 
-// const handleSwapOut = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
-//   const chainName = chain.getChainName(chainId)
-//   return async function (event: SendEvent, ctx: CbridgeContext) {
-//     const outAmount = token.scaleDown(event.args.amount, decimal)
-//     if (event.args.token == tokenAddr) {
-//       ctx.meter.Gauge('transfer_out').record(outAmount, { "to": chain.getChainName(event.args.dstChainId.toString()), "loc": chainName, "token": tokenName })
-//     }
-//   }
-// }
+const handleSwapOut = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
+  const chainName = chain.getChainName(chainId)
+  return async function (event: SendEvent, ctx: CbridgeContext) {
+    const outAmount = token.scaleDown(event.args.amount, decimal)
+    if (event.args.token == tokenAddr) {
+      ctx.meter.Gauge('transfer_out').record(outAmount, { "to": chain.getChainName(event.args.dstChainId.toString()), "loc": chainName, "token": tokenName })
+    }
+  }
+}
 
 for (const [chainId, [cBridgeAddress, tokenList]] of Object.entries(tokenAddressList)) {
   for (const [tokenName, tokenAddr, decimal] of tokenList) {
     CbridgeProcessor.bind({ address: cBridgeAddress, network: Number(chainId) })
       .onEventRelay(handleSwapIn(chainId, tokenName, decimal, tokenAddr))
-    // .onEventSend(
-    //   handleSwapOut(chainId, tokenName, decimal, tokenAddr)
-    // )
+      .onEventSend(handleSwapOut(chainId, tokenName, decimal, tokenAddr))
   }
 }
