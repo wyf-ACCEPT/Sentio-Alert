@@ -17,3 +17,6 @@ do
 done
 
 - ReExp: ,\n\s+"gas": \d+
+
+# update package!
+yarn upgrade @sentio/sdk@1.xx.x
