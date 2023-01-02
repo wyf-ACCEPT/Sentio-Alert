@@ -75,10 +75,15 @@ const addressMap: { [index: number]: [number, string[], [string, string, number]
   ],
 }
 
+const EthPrice = 1200
+
 const handleSupply = function (chainId: number, tokenName: string, decimal: number) {
   const chainName = chain.getChainName(chainId).toLowerCase()
   return async function (_: any, ctx: AnytokenContext) {
-    const supply = scaleDown(await ctx.contract.totalSupply(), decimal)
+    var supply = scaleDown(await ctx.contract.totalSupply(), decimal)
+    if (tokenName == 'anyETH') {
+      supply = supply.multipliedBy(EthPrice)
+    }
     ctx.meter.Gauge("TotalSupply").record(supply, { "token": tokenName, "loc": chainName })
   }
 }
@@ -86,7 +91,10 @@ const handleSupply = function (chainId: number, tokenName: string, decimal: numb
 const handleSwapIn = function (chainId: string, tokenName: string, decimal: number) {
   const chainName = chain.getChainName(chainId).toLowerCase()
   return async function (event: LogAnySwapInEvent, ctx: Multichain_routerContext) {
-    const inAmount = scaleDown(event.args.amount, decimal)
+    var inAmount = scaleDown(event.args.amount, decimal)
+    if (tokenName == 'anyETH') {
+      inAmount = inAmount.multipliedBy(EthPrice)
+    }
     ctx.meter.Gauge('anyswapIn').record(inAmount, { "from": chain.getChainName(event.args.fromChainID.toString()).toLowerCase(), "loc": chainName, "token": tokenName })
   }
 }
@@ -94,7 +102,10 @@ const handleSwapIn = function (chainId: string, tokenName: string, decimal: numb
 const handleSwapOut = function (chainId: string, tokenName: string, decimal: number) {
   const chainName = chain.getChainName(chainId).toLowerCase()
   return async function (event: LogAnySwapOutEvent, ctx: Multichain_routerContext) {
-    const outAmount = scaleDown(event.args.amount, decimal)
+    var outAmount = scaleDown(event.args.amount, decimal)
+    if (tokenName == 'anyETH') {
+      outAmount = outAmount.multipliedBy(EthPrice)
+    }
     ctx.meter.Gauge('anyswapOut').record(outAmount, { "to": chain.getChainName(event.args.toChainID.toString()).toLowerCase(), "loc": chainName, "token": tokenName })
   }
 }
