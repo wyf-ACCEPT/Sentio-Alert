@@ -59,21 +59,21 @@ const tokenAddressList: { [index: number]: [string, [string, string, number][]] 
 }
 
 const handleSwapIn = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
-  const chainName = chain.getChainName(chainId)
+  const chainName = chain.getChainName(chainId).toLowerCase()
   return async function (event: RelayEvent, ctx: CbridgeContext) {
     const inAmount = token.scaleDown(event.args.amount, decimal)
     if (event.args.token == tokenAddr) {
-      ctx.meter.Gauge('transfer_in').record(inAmount, { "from": chain.getChainName(event.args.srcChainId.toString()), "loc": chainName, "token": tokenName })
+      ctx.meter.Gauge('transfer_in').record(inAmount, { "from": chain.getChainName(event.args.srcChainId.toString()).toLowerCase(), "loc": chainName, "token": tokenName })
     }
   }
 }
 
 const handleSwapOut = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
-  const chainName = chain.getChainName(chainId)
+  const chainName = chain.getChainName(chainId).toLowerCase()
   return async function (event: SendEvent, ctx: CbridgeContext) {
     const outAmount = token.scaleDown(event.args.amount, decimal)
     if (event.args.token == tokenAddr) {
-      ctx.meter.Gauge('transfer_out').record(outAmount, { "to": chain.getChainName(event.args.dstChainId.toString()), "loc": chainName, "token": tokenName })
+      ctx.meter.Gauge('transfer_out').record(outAmount, { "to": chain.getChainName(event.args.dstChainId.toString()).toLowerCase(), "loc": chainName, "token": tokenName })
     }
   }
 }

@@ -27,7 +27,7 @@ const saddleSwapMap: { [index: number]: [number, [string, string, number][]] } =
 const EthPrice = 1200
 
 const handleBlock = function (chainId: number, tokenName: string, decimal: number) {
-  const chainName = getChainName(chainId)
+  const chainName = getChainName(chainId).toLowerCase()
   return async function (block: Block, ctx: HopTokenSwapContext) {
     const priceOrigin = scaleDown(await ctx.contract.calculateSwap(0, 1, 10n ** BigInt(decimal)), decimal)
     var balanceOrigin = scaleDown(await ctx.contract.getTokenBalance(0), decimal)

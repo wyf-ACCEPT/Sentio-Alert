@@ -76,7 +76,7 @@ const addressMap: { [index: number]: [number, string[], [string, string, number]
 }
 
 const handleSupply = function (chainId: number, tokenName: string, decimal: number) {
-  const chainName = chain.getChainName(chainId)
+  const chainName = chain.getChainName(chainId).toLowerCase()
   return async function (_: any, ctx: AnytokenContext) {
     const supply = scaleDown(await ctx.contract.totalSupply(), decimal)
     ctx.meter.Gauge("TotalSupply").record(supply, { "token": tokenName, "loc": chainName })
@@ -84,18 +84,18 @@ const handleSupply = function (chainId: number, tokenName: string, decimal: numb
 }
 
 const handleSwapIn = function (chainId: string, tokenName: string, decimal: number) {
-  const chainName = chain.getChainName(chainId)
+  const chainName = chain.getChainName(chainId).toLowerCase()
   return async function (event: LogAnySwapInEvent, ctx: Multichain_routerContext) {
     const inAmount = scaleDown(event.args.amount, decimal)
-    ctx.meter.Gauge('anyswapIn').record(inAmount, { "from": chain.getChainName(event.args.fromChainID.toString()), "loc": chainName, "token": tokenName })
+    ctx.meter.Gauge('anyswapIn').record(inAmount, { "from": chain.getChainName(event.args.fromChainID.toString()).toLowerCase(), "loc": chainName, "token": tokenName })
   }
 }
 
 const handleSwapOut = function (chainId: string, tokenName: string, decimal: number) {
-  const chainName = chain.getChainName(chainId)
+  const chainName = chain.getChainName(chainId).toLowerCase()
   return async function (event: LogAnySwapOutEvent, ctx: Multichain_routerContext) {
     const outAmount = scaleDown(event.args.amount, decimal)
-    ctx.meter.Gauge('anyswapOut').record(outAmount, { "to": chain.getChainName(event.args.toChainID.toString()), "loc": chainName, "token": tokenName })
+    ctx.meter.Gauge('anyswapOut').record(outAmount, { "to": chain.getChainName(event.args.toChainID.toString()).toLowerCase(), "loc": chainName, "token": tokenName })
   }
 }
 
