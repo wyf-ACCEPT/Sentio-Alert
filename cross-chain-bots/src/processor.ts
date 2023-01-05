@@ -1,3 +1,4 @@
+import type { BigNumber } from 'bignumber.js/bignumber'
 import { chain, token } from '@sentio/sdk/lib/utils';
 import { MultichainRouterContext, MultichainRouterProcessor, LogAnySwapOutEvent } from './types/multichainrouter';
 
@@ -68,17 +69,32 @@ const addressMap: { [index: number]: [string[], [string, string, number][]] } = 
 
 const EthPrice = 1200
 
+const mapOrder = function (value: BigNumber): string {
+  if (value.lte(1)) return "bot (<$1)";
+  else if (value.gt(1) && value.lte(100)) return "small ($1~$100)";
+  else if (value.gt(100) && value.lte(3000)) return "medium ($100~$3k)";
+  else return "large (>$3k)";
+}
+
 const handleSwapOutMultichain = function (chainId: string, tokenName: string, decimal: number) {
   const chainName = chain.getChainName(chainId).toLowerCase()
   return async function (event: LogAnySwapOutEvent, ctx: MultichainRouterContext) {
-    var outAmount = token.scaleDown(event.args.amount, decimal)
-    if (tokenName == 'ETH') outAmount = outAmount.multipliedBy(EthPrice)
-    ctx.meter.Gauge('swapOutAmount').record(outAmount, { 
-      "to": chain.getChainName(event.args.toChainID.toString()).toLowerCase(), 
-      "loc": chainName, 
+    var value = token.scaleDown(event.args.amount, decimal)
+    if (tokenName == 'ETH') value = value.multipliedBy(EthPrice)
+    const toChain = chain.getChainName(event.args.toChainID.toString()).toLowerCase()
+    ctx.meter.Gauge('swapOutAmount').record(value, {
+      "to": toChain,
+      "loc": chainName,
       "token": tokenName,
       "bridge": 'Multichain',
-     })
+    })
+    ctx.meter.Gauge('swapOutType').record(1, {
+      "type": mapOrder(value),
+      "to": toChain,
+      "loc": chainName,
+      "token": tokenName,
+      "bridge": 'Multichain',
+    })
   }
 }
 
