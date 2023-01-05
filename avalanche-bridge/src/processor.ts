@@ -14,9 +14,12 @@ const tokenMap: { [index: string]: [string, string, number] } = {
   'WETH': ['0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', '0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB', 18],
 }
 
+const EthPrice = 1200
+
 const handleTransfer = function (tokenName: string, tokenDecimal: number, tableName: 'out' | 'in') {
   return async function (event: TransferEvent, ctx: ERC20Context) {
-    const value = scaleDown(event.args.value, tokenDecimal)
+    var value = scaleDown(event.args.value, tokenDecimal)
+    if (tokenName == 'WETH') value = value.multipliedBy(EthPrice)
     ctx.meter.Gauge('Eth_' + tableName).record(value, { "token": tokenName })
     ctx.meter.Counter('Eth_amount_' + tableName).add(value, { "token": tokenName })
   }
@@ -24,7 +27,8 @@ const handleTransfer = function (tokenName: string, tokenDecimal: number, tableN
 
 const handleUnwrap = function (tokenName: string, tokenDecimal: number) {
   return async function (event: UnwrapEvent, ctx: ERC20BridgeContext) {
-    const value = scaleDown(event.args.amount, tokenDecimal)
+    var value = scaleDown(event.args.amount, tokenDecimal)
+    if (tokenName == 'WETH') value = value.multipliedBy(EthPrice)
     ctx.meter.Gauge('Avax_out').record(value, { "token": tokenName })
     ctx.meter.Counter('Avax_amount_out').add(value, { "token": tokenName })
   }
@@ -32,8 +36,8 @@ const handleUnwrap = function (tokenName: string, tokenDecimal: number) {
 
 const handleMint = function (tokenName: string, tokenDecimal: number) {
   return async function (event: MintEvent, ctx: ERC20BridgeContext) {
-    const value = scaleDown(event.args.amount, tokenDecimal)
-    const feevalue = scaleDown(event.args.feeAmount, tokenDecimal)
+    var value = scaleDown(event.args.amount, tokenDecimal)
+    if (tokenName == 'WETH') value = value.multipliedBy(EthPrice)
     ctx.meter.Gauge('Avax_in').record(value, { "token": tokenName })
     ctx.meter.Counter('Avax_amount_in').add(value, { "token": tokenName })
   }
