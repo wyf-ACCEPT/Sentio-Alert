@@ -8,6 +8,7 @@ const chainIdMap: { [index: number]: [number, string] } = {
   109: [137, "0x1205f31718499dBf1fCa446663B532Ef87481fe1"],   //polygon
   110: [42161, "0x892785f33CdeE22A30AEF750F285E18c18040c3e"], //arbitrum
   111: [10, "0xDecC0c09c3B5f6e92EF4184125D5648a66E35298"],    //optimism
+  112: [250, "0x12edeA9cd262006cC3C4E77c90d2CD2DD4b1eb97"],   //fantom
 }
 
 const poolIdMap: { [index: number]: [string, number] } = {
@@ -20,15 +21,14 @@ const poolIdMap: { [index: number]: [string, number] } = {
 
 const EthPrice = 1200
 
-const handleSwapIn = function (chainId: string, tokenName: string, decimal: number, poolID: number) {
+const handleSwapOut = function (chainId: string, tokenName: string, decimal: number, poolID: number) {
   const chainName = chain.getChainName(chainId).toLowerCase()
   return async function (event: SwapEvent, ctx: StargatePoolContext) {
     var inAmount = token.scaleDown(event.args.amountSD, decimal)
-    if (event.args.dstPoolId.toNumber() == 1) {
-      inAmount = inAmount.multipliedBy(EthPrice)
-    }
     if (event.args.dstPoolId.toNumber() == poolID) {
-      ctx.meter.Gauge("transfer_out").record(inAmount, { "loc": chainName, "token": tokenName, "from": event.args.chainId.toString() })
+      if (poolID == 13) inAmount = inAmount.multipliedBy(EthPrice)
+      const dstChainName = chain.getChainName(chainIdMap[event.args.chainId][0]).toLowerCase()
+      ctx.meter.Gauge("transfer_out").record(inAmount, { "loc": chainName, "token": tokenName, "to": dstChainName })
     }
   }
 }
@@ -36,6 +36,6 @@ const handleSwapIn = function (chainId: string, tokenName: string, decimal: numb
 for (const [gateId, [chainID, sBindAddress]] of Object.entries(chainIdMap)) {
   for (const [poolID, [tokenName, decimal]] of Object.entries(poolIdMap)) {
     StargatePoolProcessor.bind({ address: sBindAddress, network: Number(chainID) })
-      .onEventSwap(handleSwapIn(String(chainID), tokenName, decimal, poolID))
+      .onEventSwap(handleSwapOut(chainID.toString(), tokenName, decimal, Number(poolID)))
   }
 }
