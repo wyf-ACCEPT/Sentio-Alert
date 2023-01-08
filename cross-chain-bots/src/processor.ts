@@ -1,10 +1,11 @@
-import type { BigNumber } from 'bignumber.js/bignumber';
+import { BigNumber } from 'bignumber.js/bignumber';
 import { chain, token } from '@sentio/sdk/lib/utils';
 import { MultichainRouterContext, MultichainRouterProcessor, LogAnySwapOutEvent } from './types/multichainrouter';
 import { CBridgeContext, CBridgeProcessor, SendEvent } from './types/cbridge';
 import { HopBridgeContext, HopBridgeProcessor, TransferSentEvent } from './types/hopbridge';
 import { HopBridgeEthereumContext, HopBridgeEthereumProcessor, TransferSentToL2Event } from './types/hopbridgeethereum';
-import { MultichainMap, CBridgeMap, HopMap } from './addresses';
+import { StargatePoolContext, StargatePoolProcessor, SwapEvent } from './types/stargatepool';
+import { MultichainMap, CBridgeMap, HopMap, StargateMap } from './addresses';
 
 const EthPrice = 1200
 
@@ -120,5 +121,35 @@ for (const [chainId, tokenList] of Object.entries(HopMap)) {
       HopBridgeProcessor.bind({ address: tokenAddr, network: Number(chainId) })
         .onEventTransferSent(handleSwapOutHop(chainId, tokenName, decimal))
     }
+  }
+}
+
+// ================================= Stargate =================================
+const handleSwapOutStargate = function (chainId: string, tokenName: string) {
+  const chainName = chain.getChainName(chainId).toLowerCase()
+  return async function (event: SwapEvent, ctx: StargatePoolContext) {
+    var value = token.scaleDown(event.args.amountSD, 6)
+    if (tokenName == 'ETH') value = value.multipliedBy(EthPrice).dividedBy(1000000000000)
+    const toChain = event.args.chainId.toString()
+    ctx.meter.Gauge('swapOutAmount').record(value, {
+      "to": toChain,
+      "loc": chainName,
+      "token": tokenName,
+      "bridge": 'Stargate',
+    })
+    ctx.meter.Gauge('swapOutType').record(1, {
+      "type": mapOrder(value),
+      "to": toChain,
+      "loc": chainName,
+      "token": tokenName,
+      "bridge": 'Stargate',
+    })
+  }
+}
+
+for (const [chainId, tokenList] of Object.entries(StargateMap)) {
+  for (const [tokenName, poolAddress, poolID] of tokenList) {
+    StargatePoolProcessor.bind({ address: poolAddress, network: Number(chainId) })
+      .onEventSwap(handleSwapOutStargate(chainId.toString(), tokenName))
   }
 }

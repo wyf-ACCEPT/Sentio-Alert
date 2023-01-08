@@ -134,3 +134,47 @@ export const HopMap: { [index: number]: [string, string, number][] } = {
     ["DAI", "0x7aC115536FE3A185100B2c4DE4cb328bf3A58Ba6", 18],
   ]
 }
+
+export const StargateMap: { [index: number]: [string, string, number][] } = {
+  1: [
+    ["USDC", "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56", 1],
+    ["USDT", "0x38EA452219524Bb87e18dE1C24D3bB59510BD783", 2],
+    ["DAI", "0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d", 3],
+    ["FRAX", "0xfA0F307783AC21C39E939ACFF795e27b650F6e68", 7], 
+    ["ETH", "0x101816545F6bd2b1076434B54383a1E633390A2E", 13],
+  ],     // Ethereum
+
+  56: [
+    ["USDT", "0x9aA83081AA06AF7208Dcc7A4cB72C94d057D2cda", 2],
+  ],     // BNB Chain
+
+  43114: [
+    ["USDC", "0x1205f31718499dBf1fCa446663B532Ef87481fe1", 1],
+    ["USDT", "0x29e38769f23701A2e4A8Ef0492e19dA4604Be62c", 2],
+    ["FRAX", "0x1c272232Df0bb6225dA87f4dEcD9d37c32f63Eea", 7],
+  ],     // Avalanche
+
+  137: [
+    ["USDC", "0x1205f31718499dBf1fCa446663B532Ef87481fe1", 1],
+    ["USDT", "0x29e38769f23701A2e4A8Ef0492e19dA4604Be62c", 2],
+    ["DAI", "0x1c272232Df0bb6225dA87f4dEcD9d37c32f63Eea", 3],
+  ],     // Polygon
+
+  42161: [
+    ["USDC", "0x892785f33CdeE22A30AEF750F285E18c18040c3e", 1],
+    ["USDT", "0xB6CfcF89a7B22988bfC96632aC2A9D6daB60d641", 2],
+    ["FRAX", "0xaa4BF442F024820B2C28Cd0FD72b82c63e66F56C", 7],
+    ["ETH", "0x915A55e36A01285A14f05dE6e81ED9cE89772f8e", 13],
+  ],     // Arbitrum
+
+  10: [
+    ["USDC", "0xDecC0c09c3B5f6e92EF4184125D5648a66E35298", 1],
+    ["DAI", "0x165137624F1f692e69659f944BF69DE02874ee27", 3],
+    ["FRAX", "0x368605D9C6243A80903b9e326f1Cddde088B8924", 7],
+    ["ETH", "0xd22363e3762cA7339569F3d33EADe20127D5F98C", 13],
+  ],     // Optimism
+
+  250: [
+    ["USDC", "0x12edeA9cd262006cC3C4E77c90d2CD2DD4b1eb97", 1],
+  ],     // Fantom
+}
