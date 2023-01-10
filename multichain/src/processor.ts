@@ -62,6 +62,16 @@ const addressMap: { [index: number]: [string[], [string, string, number][]] } = 
       ['anyDAI', '0xd4143E8dB48a8f73afCDF13D7B3305F28DA38116', 18],
     ]
   ],
+  250: [  // Fantom
+    [
+      '0x1CcCA1cE62c62F7Be95d4A67722a8fDbed6EEcb4',
+    ], [
+      ['anyETH', '0xBDC8fd437C489Ca3c6DA3B5a336D11532a532303', 18],
+      ['anyUSDC', '0x95bf7E307BC1ab0BA38ae10fc27084bC36FcD605', 6],
+      ['anyUSDT', '0x2823D10DA533d9Ee873FEd7B16f4A962B2B7f181', 6],
+      ['anyDAI', '0xd652776dE7Ad802be5EC7beBfafdA37600222B48', 18],
+    ]
+  ]
 }
 
 const EthPrice = 1200

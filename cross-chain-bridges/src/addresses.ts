@@ -36,6 +36,16 @@ export const MultichainMap: { [index: number]: [string[], [string, string, numbe
       ["DAI", "0x9b17bAADf0f21F03e35249e0e59723F34994F806", 18],
     ]
   ],
+  250: [  // Fantom
+    [
+      '0x1CcCA1cE62c62F7Be95d4A67722a8fDbed6EEcb4',
+    ], [
+      ['anyETH', '0xBDC8fd437C489Ca3c6DA3B5a336D11532a532303', 18],
+      ['anyUSDC', '0x95bf7E307BC1ab0BA38ae10fc27084bC36FcD605', 6],
+      ['anyUSDT', '0x2823D10DA533d9Ee873FEd7B16f4A962B2B7f181', 6],
+      ['anyDAI', '0xd652776dE7Ad802be5EC7beBfafdA37600222B48', 18],
+    ]
+  ],
   42161: [  // Arbitrum
     [
       "0xC931f61B1534EB21D8c11B24f3f5Ab2471d4aB50",
@@ -91,6 +101,14 @@ export const CBridgeMap: { [index: number]: [string, [string, string, number][]]
       ["DAI", "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063", 18],
       ["BUSD", "0xdAb529f40E671A1D4bF91361c21bf9f0C9712ab7", 18],
     ]],
+  250: [
+    "0x374B8a9f3eC5eB2D97ECA84Ea27aCa45aa1C57EF", [
+      ["WETH", "0x74b23882a30290451A17c44f4F05243b6b58C76d", 18],
+      ["USDC", "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75", 6],
+      ["USDT", "0x049d68029688eAbF473097a2fC38ef61633A3C7A", 6],
+      ["DAI", "0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E", 18],
+    ]
+  ],
   42161: [
     "0x1619DE6B6B20eD217a58d00f37B9d47C7663feca", [
       ["ETH", "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1", 18],
@@ -140,7 +158,7 @@ export const StargateMap: { [index: number]: [string, string, number][] } = {
     ["USDC", "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56", 1],
     ["USDT", "0x38EA452219524Bb87e18dE1C24D3bB59510BD783", 2],
     ["DAI", "0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d", 3],
-    ["FRAX", "0xfA0F307783AC21C39E939ACFF795e27b650F6e68", 7], 
+    ["FRAX", "0xfA0F307783AC21C39E939ACFF795e27b650F6e68", 7],
     ["ETH", "0x101816545F6bd2b1076434B54383a1E633390A2E", 13],
   ],     // Ethereum
 
