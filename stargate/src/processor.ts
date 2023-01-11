@@ -51,14 +51,16 @@ const handleSwapOut = function (chainId: string, tokenName: string) {
   return async function (event: SwapEvent, ctx: StargatePoolContext) {
     var inAmount = token.scaleDown(event.args.amountSD, 6)
     if (tokenName == 'ETH') { inAmount = inAmount.multipliedBy(EthPrice).dividedBy(1000000000000) }
-    // const dstChainName = chain.getChainName(chainIdMap[event.args.chainId][0]).toLowerCase()
-    ctx.meter.Gauge("transfer_out").record(inAmount, { "loc": chainName, "token": tokenName, "to": event.args.chainId.toString() })
+    var dstChainId = event.args.chainId
+    if (dstChainId < 100) dstChainId += 100   // Compatible with older Stargate ChainID versions
+    const dstChainName = chain.getChainName(chainIdMap[dstChainId][0]).toLowerCase()
+    ctx.meter.Gauge("transfer_out").record(inAmount, { "loc": chainName, "token": tokenName, "to": dstChainName })
   }
 }
 
-for (const [gateId, [chainID, sRouteAddress, tokenList]] of Object.entries(chainIdMap)) {
+for (const [gateId, [chainId, sRouteAddress, tokenList]] of Object.entries(chainIdMap)) {
   for (const [tokenName, BindAddress, poolID] of tokenList) {
-    StargatePoolProcessor.bind({ address: BindAddress, network: Number(chainID) })
-      .onEventSwap(handleSwapOut(chainID.toString(), tokenName))
+    StargatePoolProcessor.bind({ address: BindAddress, network: Number(chainId) })
+      .onEventSwap(handleSwapOut(chainId.toString(), tokenName))
   }
 }
