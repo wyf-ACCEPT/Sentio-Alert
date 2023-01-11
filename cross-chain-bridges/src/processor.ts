@@ -125,12 +125,17 @@ for (const [chainId, tokenList] of Object.entries(HopMap)) {
 }
 
 // ================================= Stargate =================================
+const StargateChainIdMap: { [index: number]: number } = {
+  1: 1, 2: 56, 6: 43114, 9: 137, 10: 42161, 11: 10, 12: 250,
+  101: 1, 102: 56, 106: 43114, 109: 137, 110: 42161, 111: 10, 112: 250,
+}
+
 const handleSwapOutStargate = function (chainId: string, tokenName: string) {
   const chainName = chain.getChainName(chainId).toLowerCase()
   return async function (event: SwapEvent, ctx: StargatePoolContext) {
     var value = token.scaleDown(event.args.amountSD, 6)
     if (tokenName == 'ETH') value = value.multipliedBy(EthPrice).dividedBy(1000000000000)
-    const toChain = event.args.chainId.toString()
+    const toChain = chain.getChainName(StargateChainIdMap[event.args.chainId]).toLowerCase()
     ctx.meter.Gauge('swapOutAmount').record(value, {
       "to": toChain,
       "loc": chainName,
