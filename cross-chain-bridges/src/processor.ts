@@ -5,7 +5,8 @@ import { CBridgeContext, CBridgeProcessor, SendEvent } from './types/cbridge';
 import { HopBridgeContext, HopBridgeProcessor, TransferSentEvent } from './types/hopbridge';
 import { HopBridgeEthereumContext, HopBridgeEthereumProcessor, TransferSentToL2Event } from './types/hopbridgeethereum';
 import { StargatePoolContext, StargatePoolProcessor, SwapEvent } from './types/stargatepool';
-import { MultichainMap, CBridgeMap, HopMap, StargateMap } from './addresses';
+import { AcrossToContext, AcrossToProcessor, FundsDepositedEvent } from './types/acrossto';
+import { MultichainMap, CBridgeMap, HopMap, StargateMap, AcrossMap } from './addresses';
 
 const EthPrice = 1200
 
@@ -15,6 +16,7 @@ const mapOrder = function (value: BigNumber): string {
   else if (value.gt(100) && value.lte(3000)) return "medium ($100~$3k)";
   else return "large (>$3k)";
 }
+
 
 // ================================= Multichain =================================
 const handleSwapOutMultichain = function (chainId: string, tokenName: string, decimal: number) {
@@ -52,6 +54,7 @@ for (const [chainId, [routerList, tokenList]] of Object.entries(MultichainMap)) 
   }
 }
 
+
 // ================================= CBridge =================================
 const handleSwapOutCBridge = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
   const chainName = chain.getChainName(chainId).toLowerCase()
@@ -83,6 +86,7 @@ for (const [chainId, [cBridgeAddress, tokenList]] of Object.entries(CBridgeMap))
       .onEventSend(handleSwapOutCBridge(chainId, tokenName, decimal, tokenAddr))
   }
 }
+
 
 // ================================= Hop =================================
 const handleSwapOutHop = function (chainId: string, tokenName: string, decimal: number) {
@@ -124,6 +128,7 @@ for (const [chainId, tokenList] of Object.entries(HopMap)) {
   }
 }
 
+
 // ================================= Stargate =================================
 const StargateChainIdMap: { [index: number]: number } = {
   1: 1, 2: 56, 6: 43114, 9: 137, 10: 42161, 11: 10, 12: 250,
@@ -156,5 +161,39 @@ for (const [chainId, tokenList] of Object.entries(StargateMap)) {
   for (const [tokenName, poolAddress, poolID] of tokenList) {
     StargatePoolProcessor.bind({ address: poolAddress, network: Number(chainId) })
       .onEventSwap(handleSwapOutStargate(chainId.toString(), tokenName))
+  }
+}
+
+
+// ================================= AcrossTo =================================
+const handleSwapOutAcross = function (chainId: string, tokenName: string, decimal: number) {
+  const chainName = chain.getChainName(chainId).toLowerCase()
+  return async function (event: FundsDepositedEvent, ctx: AcrossToContext) {
+    var value = token.scaleDown(event.args.amount, decimal)
+    if (tokenName == 'ETH') value = value.multipliedBy(EthPrice)
+    const toChain = chain.getChainName(event.args.destinationChainId.toNumber()).toLowerCase()
+    ctx.meter.Gauge('swapOutAmount').record(value, {
+      "to": toChain,
+      "loc": chainName,
+      "token": tokenName,
+      "bridge": 'AcrossTo',
+    })
+    ctx.meter.Gauge('swapOutType').record(1, {
+      "type": mapOrder(value),
+      "to": toChain,
+      "loc": chainName,
+      "token": tokenName,
+      "bridge": 'AcrossTo',
+    })
+  }
+}
+
+for (const [chainId, [poolAddr, tokenList]] of Object.entries(AcrossMap)) {
+  for (const [tokenName, tokenAddr, decimal] of tokenList) {
+    AcrossToProcessor.bind({ address: poolAddr, network: Number(chainId) })
+      .onEventFundsDeposited(
+        handleSwapOutAcross(chainId, tokenName, decimal),
+        AcrossToProcessor.filters.FundsDeposited(null, null, null, null, null, null, tokenAddr)
+      )
   }
 }
