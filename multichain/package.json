@@ -10,7 +10,8 @@
     "postinstall": "sentio gen"
   },
   "dependencies": {
-    "@sentio/sdk": "1.37.3"
+    "@sentio/cli": "^1.1.7",
+    "@sentio/sdk": "^1.40.2"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",
