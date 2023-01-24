@@ -27,43 +27,32 @@ const AcrossMap: { [index: number]: [string, [string, string, number][]] } = {
   ]],     // Arbitrum
 }
 
-const generateLabel = function (
-  chainName: string,
-  tokenName: string,
-  bridge: string,
-  isOut: boolean
-): { [index: string]: string } {
-  if (isOut) return {
-    "src": chainName,
-    "token": tokenName,
-    "bridge": bridge,
-  }; else return {
-    "dst": chainName,
-    "token": tokenName,
-    "bridge": bridge,
-  }
-}
-
 const EthPrice = 1200
 
 const handleSwapOutAcross = function (chainId: string, tokenName: string, decimal: number) {
   const chainName = chain.getChainName(chainId).toLowerCase()
-  const labelAmount = generateLabel(chainName, tokenName, "AcrossTo", true)
   return async function (event: FundsDepositedEvent, ctx: AcrossToContext) {
     var value = token.scaleDown(event.args.amount, decimal)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice)
-    ctx.meter.Gauge("swapOutAmount").record(value, labelAmount)
+    ctx.meter.Gauge("swapOutAmount").record(value, {
+      "src": chainName,
+      "token": tokenName,
+      "dst": chain.getChainName(event.args.destinationChainId.toNumber()).toLowerCase(),
+    })
   }
 }
 
 const handleSwapInAcross = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
   const chainName = chain.getChainName(chainId).toLowerCase()
-  const labelAmount = generateLabel(chainName, tokenName, "AcrossTo", false)
   return async function (event: FilledRelayEvent, ctx: AcrossToContext) {
     var value = token.scaleDown(event.args.amount, decimal)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice)
     if (event.args.destinationToken == tokenAddr) {
-      ctx.meter.Gauge("swapInAmount").record(value, labelAmount)
+      ctx.meter.Gauge("swapInAmount").record(value, {
+        "src": chain.getChainName(event.args.originChainId.toNumber()).toLowerCase(),
+        "token": tokenName,
+        "dst": chainName,
+      })
     }
   }
 }
