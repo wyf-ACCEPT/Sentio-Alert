@@ -1,28 +1,32 @@
-import { Counter, Gauge } from '@sentio/sdk'
-import { ERC20Processor } from '@sentio/sdk/eth/builtin'
-import { X2y2Processor } from './types/eth/x2y2.js'
+import { LayerzeroContext, LayerzeroProcessor } from "./types/eth/layerzero.js"
 
-const rewardPerBlock = Gauge.register('reward_per_block', {
-  description: 'rewards for each block grouped by phase',
-  unit: 'x2y2',
-})
-const tokenCounter = Counter.register('token')
+const chainIdMap: { [index: number]: string } = {
+  102: 'BNB Chain',
+  106: 'Avalanche',
+  109: 'Polygon',
+  110: 'Arbitrum',
+  111: 'Optimism',
+  112: 'Fantom',
+}
 
-X2y2Processor.bind({ address: '0xB329e39Ebefd16f40d38f07643652cE17Ca5Bac1' }).onBlockInterval(async (_, ctx) => {
-  const phase = (await ctx.contract.currentPhase()).toString()
-  const reward = (await ctx.contract.rewardPerBlockForStaking()).scaleDown(18)
-  rewardPerBlock.record(ctx, reward, { phase })
-})
+const handleLayer0 = function (chainId: number) {
+  var chainName = chainIdMap[chainId]
+  return async function (event: any, ctx: LayerzeroContext) {
+    const [nativeFee, zroFee] = await ctx.contract.estimateFees(
+      chainId,
+      '0x0000000000000000000000000000000000000000',
+      '0x',
+      false,
+      '0x'
+    )
+    ctx.meter.Gauge('fee').record(nativeFee.scaleDown(18), { "type": "nativeFee", 'loc': chainName })
+    ctx.meter.Gauge('fee').record(zroFee.scaleDown(18), { "type": "zroFee", 'loc': chainName })
+  }
+}
 
-const filter = ERC20Processor.filters.Transfer(
-  '0x0000000000000000000000000000000000000000',
-  '0xb329e39ebefd16f40d38f07643652ce17ca5bac1'
-)
+for (const [gateId, _] of Object.entries(chainIdMap)) {
+  LayerzeroProcessor
+    .bind({ address: '0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675', startBlock: 15800000 })
+    .onBlockInterval(handleLayer0(Number(gateId)), 5000)
+}
 
-ERC20Processor.bind({ address: '0x1e4ede388cbc9f4b5c79681b7f94d36a11abebc9' }).onEventTransfer(
-  async (event, ctx) => {
-    const val = event.args.value.scaleDown(18)
-    tokenCounter.add(ctx, val)
-  },
-  filter // filter is an optional parameter
-)
