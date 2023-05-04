@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@sentio/cli": "^2.1.0",
+    "@sentio/cli": "^2.7.4",
     "@sentio/sdk": "^2.3.2",
     "typescript": "^4.9.4"
   }
