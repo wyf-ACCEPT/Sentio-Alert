@@ -1,4 +1,5 @@
 npx -p @sentio/sdk sentio login                     # Login via explorer
+npx @sentio/cli@latest login
 npx -p @sentio/sdk sentio create -n <project_name>
 cd <project_name>
 # Paste the ABI json file to ./abis/
