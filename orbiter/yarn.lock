@@ -10,9 +10,9 @@
     lodash.assignwith "^4.2.0"
     typical "^7.1.1"
 
-"@adraffy/ens-normalize@git+https://github.com/ricmoo/ens-normalize.js.git":
+"@adraffy/ens-normalize@https://github.com/ricmoo/ens-normalize.js":
   version "1.9.0"
-  resolved "git+https://github.com/ricmoo/ens-normalize.js.git#2d040533e57e4f25f9a7cc4715e219658ad454b5"
+  resolved "https://github.com/ricmoo/ens-normalize.js#2d040533e57e4f25f9a7cc4715e219658ad454b5"
 
 "@ampproject/remapping@^2.2.0":
   version "2.2.1"
@@ -962,7 +962,7 @@
 
 "@sentio/cli@^2.9.0":
   version "2.9.0"
-  resolved "https://registry.yarnpkg.com/@sentio/cli/-/cli-2.9.0.tgz#d9bfe999d3ec311c39119ddb347f81a460f308e5"
+  resolved "https://registry.npmmirror.com/@sentio/cli/-/cli-2.9.0.tgz#d9bfe999d3ec311c39119ddb347f81a460f308e5"
   integrity sha512-DFMk01bCZm7aXOunEQ8kOFpiUE2krhyNLLD/TfDknWlaQwMheb6X3JOm6cDE1tjNeoc5IE9jvsBjdtZlq7W5gQ==
   dependencies:
     "@jest/globals" "^29.5.0"
@@ -4479,6 +4479,7 @@ sucrase@^3.20.3:
     ts-interface-checker "^0.1.9"
 
 superstruct@^0.14.2, "superstruct_solana@npm:superstruct@^0.14.2":
+  name superstruct_solana
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/superstruct/-/superstruct-0.14.2.tgz#0dbcdf3d83676588828f1cf5ed35cda02f59025b"
   integrity sha512-nPewA6m9mR3d6k7WkZ8N8zpTWfenFH3q9pA2PkuiZxINr9DKB2+40wEQf0ixn8VaGuJ78AB6iWOtStI+/4FKZQ==
