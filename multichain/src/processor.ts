@@ -62,22 +62,30 @@ const addressMap: { [index: number]: [string[], [string, string, number][]] } = 
   //     ['anyDAI', '0xd4143E8dB48a8f73afCDF13D7B3305F28DA38116', 18],
   //   ]
   // ],
-  250: [  // Fantom
-    [
-      '0x1CcCA1cE62c62F7Be95d4A67722a8fDbed6EEcb4',
-    ], [
-      ['anyETH', '0xBDC8fd437C489Ca3c6DA3B5a336D11532a532303', 18],
-      ['anyUSDC', '0x95bf7E307BC1ab0BA38ae10fc27084bC36FcD605', 6],
-      ['anyUSDT', '0x2823D10DA533d9Ee873FEd7B16f4A962B2B7f181', 6],
-      ['anyDAI', '0xd652776dE7Ad802be5EC7beBfafdA37600222B48', 18],
-    ]
-  ],
+  // 250: [  // Fantom
+  //   [
+  //     '0x1CcCA1cE62c62F7Be95d4A67722a8fDbed6EEcb4',
+  //   ], [
+  //     ['anyETH', '0xBDC8fd437C489Ca3c6DA3B5a336D11532a532303', 18],
+  //     ['anyUSDC', '0x95bf7E307BC1ab0BA38ae10fc27084bC36FcD605', 6],
+  //     ['anyUSDT', '0x2823D10DA533d9Ee873FEd7B16f4A962B2B7f181', 6],
+  //     ['anyDAI', '0xd652776dE7Ad802be5EC7beBfafdA37600222B48', 18],
+  //   ]
+  // ],
   324: [  // Zksync Era
     [
       '0xff7104537F33937c66Ac0a65609EB8364Be75c7A',
     ], [
       ['anyETH', '0x7BcD44c0B91bE28827426f607424E1A8A02d4E69', 18],
       ['anyUSDC', '0x5f3268A22A624AE81281D47A247dAb8F7105f2F9', 6],
+    ]
+  ],
+  1101: [
+    [
+      '0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C',
+    ], [
+      ['anyETH', '0x765277EebeCA2e31912C9946eAe1021199B39C61', 18],
+      ['anyUSDC', '0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055', 6],
     ]
   ]
 }
