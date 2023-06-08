@@ -86,6 +86,7 @@ const addressMap: { [index: number]: [string[], [string, string, number][]] } = 
     ], [
       ['anyETH', '0x765277EebeCA2e31912C9946eAe1021199B39C61', 18],
       ['anyUSDC', '0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055', 6],
+      ['anyUSDT', '0x332730a4F6E03D9C55829435f10360E13cfA41Ff', 6],
     ]
   ]
 }
