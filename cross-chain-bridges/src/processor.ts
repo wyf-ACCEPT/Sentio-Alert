@@ -1,5 +1,6 @@
-import { BigNumber } from "bignumber.js/bignumber";
-import { chain, token } from "@sentio/sdk/lib/utils";
+import { getChainName } from "@sentio/sdk/lib/core/chain";
+import { scaleDown, BigDecimal } from "@sentio/sdk/lib/core";
+
 import { MultichainRouterContext, MultichainRouterProcessor, LogAnySwapOutEvent, LogAnySwapInEvent } from "./types/multichainrouter";
 import { CBridgeContext, CBridgeProcessor, SendEvent, RelayEvent } from "./types/cbridge";
 import {
@@ -21,7 +22,7 @@ import { MultichainMap, CBridgeMap, HopMap, StargateMap, AcrossMap } from "./add
 
 const EthPrice = 1200
 
-const mapOrder = function (value: BigNumber): string {
+const mapOrder = function (value: BigDecimal): string {
   if (value.lte(1)) return "bot (<$1)";
   else if (value.gt(1) && value.lte(100)) return "small ($1~$100)";
   else if (value.gt(100) && value.lte(3000)) return "medium ($100~$3k)";
@@ -48,10 +49,10 @@ const generateLabel = function (
 
 // ================================= Multichain =================================
 const handleSwapOutMultichain = function (chainId: string, tokenName: string, decimal: number) {
-  const chainName = chain.getChainName(chainId).toLowerCase()
+  const chainName = getChainName(chainId).toLowerCase()
   const labelAmount = generateLabel(chainName, tokenName, "Multichain", true)
   return async function (event: LogAnySwapOutEvent, ctx: MultichainRouterContext) {
-    var value = token.scaleDown(event.args.amount, decimal)
+    var value = scaleDown(event.args.amount, decimal)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice)
     ctx.meter.Gauge("swapOutAmount").record(value, labelAmount)
     ctx.meter.Gauge("swapOutType").record(1, {...labelAmount, "type": mapOrder(value)})
@@ -59,10 +60,10 @@ const handleSwapOutMultichain = function (chainId: string, tokenName: string, de
 }
 
 const handleSwapInMultichain = function (chainId: string, tokenName: string, decimal: number) {
-  const chainName = chain.getChainName(chainId).toLowerCase()
+  const chainName = getChainName(chainId).toLowerCase()
   const labelAmount = generateLabel(chainName, tokenName, "Multichain", false)
   return async function (event: LogAnySwapInEvent, ctx: MultichainRouterContext) {
-    var value = token.scaleDown(event.args.amount, decimal)
+    var value = scaleDown(event.args.amount, decimal)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice)
     ctx.meter.Gauge("swapInAmount").record(value, labelAmount)
     ctx.meter.Gauge("swapInType").record(1, {...labelAmount, "type": mapOrder(value)})
@@ -89,10 +90,10 @@ for (const [chainId, [routerList, tokenList]] of Object.entries(MultichainMap)) 
 
 // ================================= CBridge =================================
 const handleSwapOutCBridge = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
-  const chainName = chain.getChainName(chainId).toLowerCase()
+  const chainName = getChainName(chainId).toLowerCase()
   const labelAmount = generateLabel(chainName, tokenName, "CBridge", true)
   return async function (event: SendEvent, ctx: CBridgeContext) {
-    var value = token.scaleDown(event.args.amount, decimal)
+    var value = scaleDown(event.args.amount, decimal)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice)
     if (event.args.token == tokenAddr) {
       ctx.meter.Gauge("swapOutAmount").record(value, labelAmount)
@@ -102,10 +103,10 @@ const handleSwapOutCBridge = function (chainId: string, tokenName: string, decim
 }
 
 const handleSwapInCBridge = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
-  const chainName = chain.getChainName(chainId).toLowerCase()
+  const chainName = getChainName(chainId).toLowerCase()
   const labelAmount = generateLabel(chainName, tokenName, "CBridge", false)
   return async function (event: RelayEvent, ctx: CBridgeContext) {
-    var value = token.scaleDown(event.args.amount, decimal)
+    var value = scaleDown(event.args.amount, decimal)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice)
     if (event.args.token == tokenAddr) {
       ctx.meter.Gauge("swapInAmount").record(value, labelAmount)
@@ -125,13 +126,13 @@ for (const [chainId, [cBridgeAddress, tokenList]] of Object.entries(CBridgeMap))
 
 // ================================= Hop =================================
 const handleSwapOutHop = function (chainId: string, tokenName: string, decimal: number) {
-  const chainName = chain.getChainName(chainId).toLowerCase()
+  const chainName = getChainName(chainId).toLowerCase()
   const labelAmount = generateLabel(chainName, tokenName, "Hop", true)
   return async function (
     event: TransferSentEvent | TransferSentToL2Event,
     ctx: HopBridgeContext | HopBridgeEthereumContext
   ) {
-    var value = token.scaleDown(event.args.amount, decimal)
+    var value = scaleDown(event.args.amount, decimal)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice)
     ctx.meter.Gauge("swapOutAmount").record(value, labelAmount)
     ctx.meter.Gauge("swapOutType").record(1, {...labelAmount, "type": mapOrder(value)})
@@ -139,13 +140,13 @@ const handleSwapOutHop = function (chainId: string, tokenName: string, decimal: 
 }
 
 const handleSwapInHop = function (chainId: string, tokenName: string, decimal: number) {
-  const chainName = chain.getChainName(chainId).toLowerCase()
+  const chainName = getChainName(chainId).toLowerCase()
   const labelAmount = generateLabel(chainName, tokenName, "Hop", false)
   return async function (
     event: WithdrawalBondedEthereumEvent | WithdrawalBondedL2Event,
     ctx: HopBridgeContext | HopBridgeEthereumContext
   ) {
-    var value = token.scaleDown(event.args.amount, decimal)
+    var value = scaleDown(event.args.amount, decimal)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice)
     ctx.meter.Gauge("swapInAmount").record(value, labelAmount)
     ctx.meter.Gauge("swapInType").record(1, {...labelAmount, "type": mapOrder(value)})
@@ -171,10 +172,10 @@ for (const [chainId, tokenList] of Object.entries(HopMap)) {
 
 // ================================= Stargate =================================
 const handleSwapOutStargate = function (chainId: string, tokenName: string) {
-  const chainName = chain.getChainName(chainId).toLowerCase()
+  const chainName = getChainName(chainId).toLowerCase()
   const labelAmount = generateLabel(chainName, tokenName, "Stargate", true)
   return async function (event: SwapEvent, ctx: StargatePoolContext) {
-    var value = token.scaleDown(event.args.amountSD, 6)
+    var value = scaleDown(event.args.amountSD, 6)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice).dividedBy(1000000000000)
     ctx.meter.Gauge("swapOutAmount").record(value, labelAmount)
     ctx.meter.Gauge("swapOutType").record(1, {...labelAmount, "type": mapOrder(value)})
@@ -182,10 +183,10 @@ const handleSwapOutStargate = function (chainId: string, tokenName: string) {
 }
 
 const handleSwapInStargate = function (chainId: string, tokenName: string) {
-  const chainName = chain.getChainName(chainId).toLowerCase()
+  const chainName = getChainName(chainId).toLowerCase()
   const labelAmount = generateLabel(chainName, tokenName, "Stargate", false)
   return async function (event: SwapRemoteEvent, ctx: StargatePoolContext) {
-    var value = token.scaleDown(event.args.amountSD, 6)
+    var value = scaleDown(event.args.amountSD, 6)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice).dividedBy(1000000000000)
     ctx.meter.Gauge("swapInAmount").record(value, labelAmount)
     ctx.meter.Gauge("swapInType").record(1, {...labelAmount, "type": mapOrder(value)})
@@ -203,10 +204,10 @@ for (const [chainId, tokenList] of Object.entries(StargateMap)) {
 
 // ================================= AcrossTo =================================
 const handleSwapOutAcrossOld = function (chainId: string, tokenName: string, decimal: number) {
-  const chainName = chain.getChainName(chainId).toLowerCase()
+  const chainName = getChainName(chainId).toLowerCase()
   const labelAmount = generateLabel(chainName, tokenName, "AcrossTo", true)
   return async function (event: FundsDepositedEventOld, ctx: AcrossToOldContext) {
-    var value = token.scaleDown(event.args.amount, decimal)
+    var value = scaleDown(event.args.amount, decimal)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice)
     ctx.meter.Gauge("swapOutAmount").record(value, labelAmount)
     ctx.meter.Gauge("swapOutType").record(1, {...labelAmount, "type": mapOrder(value)})
@@ -214,10 +215,10 @@ const handleSwapOutAcrossOld = function (chainId: string, tokenName: string, dec
 }
 
 const handleSwapOutAcrossNew = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
-  const chainName = chain.getChainName(chainId).toLowerCase()
+  const chainName = getChainName(chainId).toLowerCase()
   const labelAmount = generateLabel(chainName, tokenName, "AcrossTo", true)
   return async function (event: FundsDepositedEventNew, ctx: AcrossToNewContext) {
-    var value = token.scaleDown(event.args.amount, decimal)
+    var value = scaleDown(event.args.amount, decimal)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice)
     if (event.args.originToken == tokenAddr) {
       ctx.meter.Gauge("swapOutAmount").record(value, labelAmount)
@@ -227,10 +228,10 @@ const handleSwapOutAcrossNew = function (chainId: string, tokenName: string, dec
 }
 
 const handleSwapInAcrossOld = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
-  const chainName = chain.getChainName(chainId).toLowerCase()
+  const chainName = getChainName(chainId).toLowerCase()
   const labelAmount = generateLabel(chainName, tokenName, "AcrossTo", false)
   return async function (event: FilledRelayEventOld, ctx: AcrossToOldContext) {
-    var value = token.scaleDown(event.args.amount, decimal)
+    var value = scaleDown(event.args.amount, decimal)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice)
     if (event.args.destinationToken == tokenAddr) {
       ctx.meter.Gauge("swapInAmount").record(value, labelAmount)
@@ -240,10 +241,10 @@ const handleSwapInAcrossOld = function (chainId: string, tokenName: string, deci
 }
 
 const handleSwapInAcrossNew = function (chainId: string, tokenName: string, decimal: number, tokenAddr: string) {
-  const chainName = chain.getChainName(chainId).toLowerCase()
+  const chainName = getChainName(chainId).toLowerCase()
   const labelAmount = generateLabel(chainName, tokenName, "AcrossTo", false)
   return async function (event: FilledRelayEventNew, ctx: AcrossToNewContext) {
-    var value = token.scaleDown(event.args.amount, decimal)
+    var value = scaleDown(event.args.amount, decimal)
     if (tokenName == "ETH") value = value.multipliedBy(EthPrice)
     if (event.args.destinationToken == tokenAddr) {
       ctx.meter.Gauge("swapInAmount").record(value, labelAmount)
