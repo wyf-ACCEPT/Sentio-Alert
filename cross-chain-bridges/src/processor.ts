@@ -1,24 +1,25 @@
-import { getChainName } from "@sentio/sdk/lib/core/chain";
-import { scaleDown, BigDecimal } from "@sentio/sdk/lib/core";
+import { getChainName } from "@sentio/sdk";
+import { scaleDown, BigDecimal } from "@sentio/sdk/core";
+import { EthChainId } from "@sentio/sdk/eth"
 
-import { MultichainRouterContext, MultichainRouterProcessor, LogAnySwapOutEvent, LogAnySwapInEvent } from "./types/eth/multichainrouter";
-import { CBridgeContext, CBridgeProcessor, SendEvent, RelayEvent } from "./types/eth/cbridge";
+import { MultichainRouterContext, MultichainRouterProcessor, LogAnySwapOutEvent, LogAnySwapInEvent } from "./types/eth/multichainrouter.js";
+import { CBridgeContext, CBridgeProcessor, SendEvent, RelayEvent } from "./types/eth/cbridge.js";
 import {
   HopBridgeContext, HopBridgeProcessor, TransferSentEvent, WithdrawalBondedEvent as WithdrawalBondedL2Event
-} from "./types/eth/hopbridge";
+} from "./types/eth/hopbridge.js";
 import {
   HopBridgeEthereumContext, HopBridgeEthereumProcessor, TransferSentToL2Event, WithdrawalBondedEvent as WithdrawalBondedEthereumEvent
-} from "./types/eth/hopbridgeethereum";
-import { StargatePoolContext, StargatePoolProcessor, SwapEvent, SwapRemoteEvent } from "./types/eth/stargatepool";
-import { 
-  AcrossToContext as AcrossToOldContext, AcrossToProcessor as AcrossToOldProcessor, 
+} from "./types/eth/hopbridgeethereum.js";
+import { StargatePoolContext, StargatePoolProcessor, SwapEvent, SwapRemoteEvent } from "./types/eth/stargatepool.js";
+import {
+  AcrossToContext as AcrossToOldContext, AcrossToProcessor as AcrossToOldProcessor,
   FundsDepositedEvent as FundsDepositedEventOld, FilledRelayEvent as FilledRelayEventOld,
-} from "./types/eth/acrossto";
-import { 
-  AcrossToNewContext, AcrossToNewProcessor, 
+} from "./types/eth/acrossto.js";
+import {
+  AcrossToNewContext, AcrossToNewProcessor,
   FundsDepositedEvent as FundsDepositedEventNew, FilledRelayEvent as FilledRelayEventNew,
-} from "./types/eth/acrosstonew";
-import { MultichainMap, CBridgeMap, HopMap, StargateMap, AcrossMap } from "./addresses";
+} from "./types/eth/acrosstonew.js";
+import { MultichainMap, CBridgeMap, HopMap, StargateMap, AcrossMap } from "./addresses.js";
 
 const EthPrice = 1200
 
@@ -74,7 +75,7 @@ for (const [chainId, [routerList, tokenList]] of Object.entries(MultichainMap)) 
   for (var [tokenName, tokenAddr, decimal] of tokenList) {
     for (var routerAddress of routerList) {
       MultichainRouterProcessor
-        .bind({ address: routerAddress, network: Number(chainId) })
+        .bind({ address: routerAddress, network: <EthChainId>chainId })
         .onEventLogAnySwapOut(
           handleSwapOutMultichain(chainId, tokenName, decimal),
           MultichainRouterProcessor.filters.LogAnySwapOut(tokenAddr)
@@ -117,7 +118,7 @@ const handleSwapInCBridge = function (chainId: string, tokenName: string, decima
 
 for (const [chainId, [cBridgeAddress, tokenList]] of Object.entries(CBridgeMap)) {
   for (const [tokenName, tokenAddr, decimal] of tokenList) {
-    CBridgeProcessor.bind({ address: cBridgeAddress, network: Number(chainId) })
+    CBridgeProcessor.bind({ address: cBridgeAddress, network: <EthChainId>(chainId) })
       .onEventSend(handleSwapOutCBridge(chainId, tokenName, decimal, tokenAddr))
       .onEventRelay(handleSwapInCBridge(chainId, tokenName, decimal, tokenAddr))
   }
@@ -156,13 +157,13 @@ const handleSwapInHop = function (chainId: string, tokenName: string, decimal: n
 for (const [chainId, tokenList] of Object.entries(HopMap)) {
   if (Number(chainId) == 1) {
     for (const [tokenName, tokenAddr, decimal] of tokenList) {
-      HopBridgeEthereumProcessor.bind({ address: tokenAddr, network: Number(chainId) })
+      HopBridgeEthereumProcessor.bind({ address: tokenAddr, network: <EthChainId>(chainId) })
         .onEventTransferSentToL2(handleSwapOutHop(chainId, tokenName, decimal))
         .onEventWithdrawalBonded(handleSwapInHop(chainId, tokenName, decimal))
     }
   } else {
     for (const [tokenName, tokenAddr, decimal] of tokenList) {
-      HopBridgeProcessor.bind({ address: tokenAddr, network: Number(chainId) })
+      HopBridgeProcessor.bind({ address: tokenAddr, network: <EthChainId>(chainId) })
         .onEventTransferSent(handleSwapOutHop(chainId, tokenName, decimal))
         .onEventWithdrawalBonded(handleSwapInHop(chainId, tokenName, decimal))
     }
@@ -195,7 +196,7 @@ const handleSwapInStargate = function (chainId: string, tokenName: string) {
 
 for (const [chainId, tokenList] of Object.entries(StargateMap)) {
   for (const [tokenName, poolAddress, _] of tokenList) {
-    StargatePoolProcessor.bind({ address: poolAddress, network: Number(chainId) })
+    StargatePoolProcessor.bind({ address: poolAddress, network: <EthChainId>(chainId) })
       .onEventSwap(handleSwapOutStargate(chainId, tokenName))
       .onEventSwapRemote(handleSwapInStargate(chainId, tokenName))
   }
@@ -256,7 +257,7 @@ const handleSwapInAcrossNew = function (chainId: string, tokenName: string, deci
 for (const [chainId, [poolList, tokenList]] of Object.entries(AcrossMap)) {
   const [contractOld, contractNew] = poolList
   for (const [tokenName, tokenAddr, decimal] of tokenList) {
-    AcrossToOldProcessor.bind({ address: contractOld, network: Number(chainId) })
+    AcrossToOldProcessor.bind({ address: contractOld, network: <EthChainId>(chainId) })
       .onEventFundsDeposited(
         handleSwapOutAcrossOld(chainId, tokenName, decimal),
         AcrossToOldProcessor.filters.FundsDeposited(null, null, null, null, null, null, tokenAddr)
@@ -264,7 +265,7 @@ for (const [chainId, [poolList, tokenList]] of Object.entries(AcrossMap)) {
       .onEventFilledRelay(
         handleSwapInAcrossOld(chainId, tokenName, decimal, tokenAddr)
       )
-    AcrossToNewProcessor.bind({ address: contractNew, network: Number(chainId) })
+    AcrossToNewProcessor.bind({ address: contractNew, network: <EthChainId>(chainId) })
       .onEventFundsDeposited(
         handleSwapOutAcrossNew(chainId, tokenName, decimal, tokenAddr)
       )

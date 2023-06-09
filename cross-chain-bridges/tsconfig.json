@@ -7,7 +7,7 @@
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "module": "commonjs",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "strictNullChecks": true,
     "stripInternal": true,
     "noFallthroughCasesInSwitch": true,
@@ -16,5 +16,5 @@
     "rootDir": "./src",
     "skipLibCheck": true
   },
-  "exclude": ["dist"]
+  "exclude": ["dist", "jest.config.ts"]
 }
