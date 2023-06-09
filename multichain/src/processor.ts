@@ -80,7 +80,7 @@ const addressMap: { [index: number]: [string[], [string, string, number][]] } = 
       ['anyUSDC', '0x5f3268A22A624AE81281D47A247dAb8F7105f2F9', 6],
     ]
   ],
-  1101: [
+  1101: [ // Polygon zkEVM
     [
       '0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C',
     ], [

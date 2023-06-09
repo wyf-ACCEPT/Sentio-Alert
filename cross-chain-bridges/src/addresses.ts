@@ -67,6 +67,23 @@ export const MultichainMap: { [index: number]: [string[], [string, string, numbe
       ["DAI", "0xd4143E8dB48a8f73afCDF13D7B3305F28DA38116", 18],
     ]
   ],
+  324: [  // Zksync Era
+    [
+      '0xff7104537F33937c66Ac0a65609EB8364Be75c7A',
+    ], [
+      ['ETH', '0x7BcD44c0B91bE28827426f607424E1A8A02d4E69', 18],
+      ['USDC', '0x5f3268A22A624AE81281D47A247dAb8F7105f2F9', 6],
+    ]
+  ],
+  1101: [ // Polygon zkEVM
+    [
+      '0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C',
+    ], [
+      ['ETH', '0x765277EebeCA2e31912C9946eAe1021199B39C61', 18],
+      ['USDC', '0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055', 6],
+      ['USDT', '0x332730a4F6E03D9C55829435f10360E13cfA41Ff', 6],
+    ]
+  ]
 }
 
 export const CBridgeMap: { [index: number]: [string, [string, string, number][]] } = {
@@ -76,28 +93,32 @@ export const CBridgeMap: { [index: number]: [string, [string, string, number][]]
       ["USDC", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 6],
       ["USDT", "0xdAC17F958D2ee523a2206206994597C13D831ec7", 6],
       ["DAI", "0x6B175474E89094C44Da98b954EedeAC495271d0F", 18],
-    ]],
+    ]
+  ],
   10: [
     "0x9D39Fc627A6d9d9F8C831c16995b209548cc3401", [
       ["ETH", "0x4200000000000000000000000000000000000006", 18],
       ["USDC", "0x7F5c764cBc14f9669B88837ca1490cCa17c31607", 6],
       ["USDT", "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58", 6],
       ["DAI", "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1", 18],
-    ]],
+    ]
+  ],
   56: [
     "0xdd90E5E87A2081Dcf0391920868eBc2FFB81a1aF", [
       ["ETH", "0x2170Ed0880ac9A755fd29B2688956BD959F933F8", 18],
       ["USDC", "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d", 18],
       ["USDT", "0x55d398326f99059fF775485246999027B3197955", 18],
       ["DAI", "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3", 18],
-    ]],
+    ]
+  ],
   137: [
     "0x88DCDC47D2f83a99CF0000FDF667A468bB958a78", [
       ["ETH", "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619", 18],
       ["USDC", "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174", 6],
       ["USDT", "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", 6],
       ["DAI", "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063", 18],
-    ]],
+    ]
+  ],
   250: [
     "0x374B8a9f3eC5eB2D97ECA84Ea27aCa45aa1C57EF", [
       ["ETH", "0x74b23882a30290451A17c44f4F05243b6b58C76d", 18],
@@ -112,14 +133,29 @@ export const CBridgeMap: { [index: number]: [string, [string, string, number][]]
       ["USDC", "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8", 6],
       ["USDT", "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9", 6],
       ["DAI", "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1", 18],
-    ]],
+    ]
+  ],
   43114: [
     "0xef3c714c9425a8F3697A9C969Dc1af30ba82e5d4", [
       ["ETH", "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB", 18],
       ["USDC", "0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664", 6],
       ["USDT", "0xc7198437980c041c805A1EDcbA50c1Ce5db95118", 6],
       ["DAI", "0xd586E7F844cEa2F87f50152665BCbc2C279D8d70", 18],
-    ]]
+    ]
+  ],
+  324: [
+    "0x54069e96C4247b37C2fbd9559CA99f08CD1CD66c", [
+      ["ETH", "0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91", 18],
+      ["USDC", "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4", 6],
+    ]
+  ],
+  1101: [
+    "0xD46F8E428A06789B5884df54E029e738277388D1", [
+      ["ETH", "0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9", 18],
+      ["USDC", "0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035", 6],
+      ["USDT", "0x1E4a5963aBFD975d8c9021ce480b42188849D41d", 6],
+    ]
+  ]
 }
 
 export const HopMap: { [index: number]: [string, string, number][] } = {
@@ -150,79 +186,83 @@ export const HopMap: { [index: number]: [string, string, number][] } = {
 }
 
 export const StargateMap: { [index: number]: [string, string, number][] } = {
-  1: [
+  1: [        // Ethereum
     ["USDC", "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56", 1],
     ["USDT", "0x38EA452219524Bb87e18dE1C24D3bB59510BD783", 2],
     ["DAI", "0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d", 3],
     ["ETH", "0x101816545F6bd2b1076434B54383a1E633390A2E", 13],
-  ],     // Ethereum
+  ],
 
-  56: [
+  56: [       // BNB Chain
     ["USDT", "0x9aA83081AA06AF7208Dcc7A4cB72C94d057D2cda", 2],
-  ],     // BNB Chain
+  ],
 
-  43114: [
+  43114: [    // Avalanche
     ["USDC", "0x1205f31718499dBf1fCa446663B532Ef87481fe1", 1],
     ["USDT", "0x29e38769f23701A2e4A8Ef0492e19dA4604Be62c", 2],
-  ],     // Avalanche
+  ],
 
-  137: [
+  137: [      // Polygon
     ["USDC", "0x1205f31718499dBf1fCa446663B532Ef87481fe1", 1],
     ["USDT", "0x29e38769f23701A2e4A8Ef0492e19dA4604Be62c", 2],
     ["DAI", "0x1c272232Df0bb6225dA87f4dEcD9d37c32f63Eea", 3],
-  ],     // Polygon
+  ],
 
-  42161: [
+  42161: [    // Arbitrum
     ["USDC", "0x892785f33CdeE22A30AEF750F285E18c18040c3e", 1],
     ["USDT", "0xB6CfcF89a7B22988bfC96632aC2A9D6daB60d641", 2],
     ["ETH", "0x915A55e36A01285A14f05dE6e81ED9cE89772f8e", 13],
-  ],     // Arbitrum
+  ],
 
-  10: [
+  10: [       // Optimism
     ["USDC", "0xDecC0c09c3B5f6e92EF4184125D5648a66E35298", 1],
     ["DAI", "0x165137624F1f692e69659f944BF69DE02874ee27", 3],
     ["ETH", "0xd22363e3762cA7339569F3d33EADe20127D5F98C", 13],
-  ],     // Optimism
+  ],
 
-  250: [
+  250: [      // Fantom
     ["USDC", "0x12edeA9cd262006cC3C4E77c90d2CD2DD4b1eb97", 1],
-  ],     // Fantom
+  ],
 }
 
 export const AcrossMap: { [index: number]: [string[], [string, string, number][]] } = {
-  1: [[
+  1: [[         // Ethereum
     "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
     "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
   ], [
     ["ETH", "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", 18],
     ["USDC", "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 6],
+    ["USDT", "0xdAC17F958D2ee523a2206206994597C13D831ec7", 6],
     ["DAI", "0x6B175474E89094C44Da98b954EedeAC495271d0F", 18],
-  ]],     // Ethereum
+  ]],
 
-  10: [[
+  10: [[        // Optimism
     "0xa420b2d1c0841415A695b81E5B867BCD07Dff8C9",
     "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
   ], [
     ["ETH", "0x4200000000000000000000000000000000000006", 18],
     ["USDC", "0x7F5c764cBc14f9669B88837ca1490cCa17c31607", 6],
+    ["USDT", "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58", 6],
     ["DAI", "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1", 18],
-  ]],     // Optimism
+  ]],
 
-  137: [[
+  137: [[       // Polygon
     "0x69B5c72837769eF1e7C164Abc6515DcFf217F920",
     "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
   ], [
     ["ETH", "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619", 18],
     ["USDC", "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174", 6],
+    ["USDT", "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", 6],
     ["DAI", "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063", 18],
-  ]],     // Polygon
+  ]],
 
-  42161: [[
+  42161: [[     // Arbitrum
     "0xB88690461dDbaB6f04Dfad7df66B7725942FEb9C",
     "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
   ], [
     ["ETH", "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1", 18],
     ["USDC", "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8", 6],
+    ["USDT", "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9", 6],
     ["DAI", "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1", 18],
-  ]],     // Arbitrum
+  ]],
 }
