@@ -1,23 +1,23 @@
 import { getChainName } from "@sentio/sdk/lib/core/chain";
 import { scaleDown, BigDecimal } from "@sentio/sdk/lib/core";
 
-import { MultichainRouterContext, MultichainRouterProcessor, LogAnySwapOutEvent, LogAnySwapInEvent } from "./types/multichainrouter";
-import { CBridgeContext, CBridgeProcessor, SendEvent, RelayEvent } from "./types/cbridge";
+import { MultichainRouterContext, MultichainRouterProcessor, LogAnySwapOutEvent, LogAnySwapInEvent } from "./types/eth/multichainrouter";
+import { CBridgeContext, CBridgeProcessor, SendEvent, RelayEvent } from "./types/eth/cbridge";
 import {
   HopBridgeContext, HopBridgeProcessor, TransferSentEvent, WithdrawalBondedEvent as WithdrawalBondedL2Event
-} from "./types/hopbridge";
+} from "./types/eth/hopbridge";
 import {
   HopBridgeEthereumContext, HopBridgeEthereumProcessor, TransferSentToL2Event, WithdrawalBondedEvent as WithdrawalBondedEthereumEvent
-} from "./types/hopbridgeethereum";
-import { StargatePoolContext, StargatePoolProcessor, SwapEvent, SwapRemoteEvent } from "./types/stargatepool";
+} from "./types/eth/hopbridgeethereum";
+import { StargatePoolContext, StargatePoolProcessor, SwapEvent, SwapRemoteEvent } from "./types/eth/stargatepool";
 import { 
   AcrossToContext as AcrossToOldContext, AcrossToProcessor as AcrossToOldProcessor, 
   FundsDepositedEvent as FundsDepositedEventOld, FilledRelayEvent as FilledRelayEventOld,
-} from "./types/acrossto";
+} from "./types/eth/acrossto";
 import { 
   AcrossToNewContext, AcrossToNewProcessor, 
   FundsDepositedEvent as FundsDepositedEventNew, FilledRelayEvent as FilledRelayEventNew,
-} from "./types/acrosstonew";
+} from "./types/eth/acrosstonew";
 import { MultichainMap, CBridgeMap, HopMap, StargateMap, AcrossMap } from "./addresses";
 
 const EthPrice = 1200
