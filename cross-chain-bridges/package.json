@@ -1,6 +1,7 @@
 {
   "name": "cross-chain-bridges",
   "private": true,
+  "type": "module",
   "version": "7.0.0",
   "scripts": {
     "test": "jest",
