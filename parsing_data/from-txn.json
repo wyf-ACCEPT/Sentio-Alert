@@ -1,0 +1,156 @@
+{
+    "results": [
+        {
+            "id": "a",
+            "alias": "Celer, <- Zksync ({{token}})",
+            "dataSource": "METRICS",
+            "matrix": {
+                "samples": [
+                    {
+                        "metric": {
+                            "name": "swapOutType",
+                            "labels": {
+                                "chain": "324",
+                                "token": "USDC"
+                            },
+                            "displayName": "Celer, <- Zksync ({{token}})"
+                        },
+                        "values": [
+                            {
+                                "timestamp": "1684080000",
+                                "value": 35
+                            },
+                            {
+                                "timestamp": "1684166400",
+                                "value": 31
+                            },
+                            {
+                                "timestamp": "1684252800",
+                                "value": 27
+                            },
+                            {
+                                "timestamp": "1684339200",
+                                "value": 34
+                            },
+                            {
+                                "timestamp": "1684425600",
+                                "value": 22
+                            },
+                            {
+                                "timestamp": "1684512000",
+                                "value": 30
+                            },
+                            {
+                                "timestamp": "1684598400",
+                                "value": 30
+                            },
+                            {
+                                "timestamp": "1684684800",
+                                "value": 60
+                            },
+                            {
+                                "timestamp": "1684771200",
+                                "value": 68
+                            },
+                            {
+                                "timestamp": "1684857600",
+                                "value": 117
+                            },
+                            {
+                                "timestamp": "1684944000",
+                                "value": 78
+                            },
+                            {
+                                "timestamp": "1685030400",
+                                "value": 61
+                            },
+                            {
+                                "timestamp": "1685116800",
+                                "value": 84
+                            },
+                            {
+                                "timestamp": "1685203200",
+                                "value": 69
+                            },
+                            {
+                                "timestamp": "1685289600",
+                                "value": 70
+                            },
+                            {
+                                "timestamp": "1685376000",
+                                "value": 45
+                            },
+                            {
+                                "timestamp": "1685462400",
+                                "value": 78
+                            },
+                            {
+                                "timestamp": "1685548800",
+                                "value": 54
+                            },
+                            {
+                                "timestamp": "1685635200",
+                                "value": 71
+                            },
+                            {
+                                "timestamp": "1685721600",
+                                "value": 40
+                            },
+                            {
+                                "timestamp": "1685808000",
+                                "value": 44
+                            },
+                            {
+                                "timestamp": "1685894400",
+                                "value": 48
+                            },
+                            {
+                                "timestamp": "1685980800",
+                                "value": 65
+                            },
+                            {
+                                "timestamp": "1686067200",
+                                "value": 167
+                            },
+                            {
+                                "timestamp": "1686153600",
+                                "value": 769
+                            },
+                            {
+                                "timestamp": "1686240000",
+                                "value": 786
+                            },
+                            {
+                                "timestamp": "1686326400",
+                                "value": 550
+                            },
+                            {
+                                "timestamp": "1686412800",
+                                "value": 233
+                            },
+                            {
+                                "timestamp": "1686499200",
+                                "value": 180
+                            },
+                            {
+                                "timestamp": "1686585600",
+                                "value": 116
+                            },
+                            {
+                                "timestamp": "1686672000",
+                                "value": 42
+                            }
+                        ]
+                    }
+                ],
+                "totalSamples": 1
+            }
+        },
+        {
+            "id": "",
+            "alias": "",
+            "dataSource": "FORMULA",
+            "error": "1:1: expected operand, found 'EOF'"
+        }
+    ]
+}

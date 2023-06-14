@@ -1,0 +1,156 @@
+{
+    "results": [
+        {
+            "id": "a",
+            "alias": "Celer, -> Zksync ({{token}})",
+            "dataSource": "METRICS",
+            "matrix": {
+                "samples": [
+                    {
+                        "metric": {
+                            "name": "swapInAmount",
+                            "labels": {
+                                "chain": "324",
+                                "token": "USDC"
+                            },
+                            "displayName": "Celer, -> Zksync ({{token}})"
+                        },
+                        "values": [
+                            {
+                                "timestamp": "1684080000",
+                                "value": 84
+                            },
+                            {
+                                "timestamp": "1684166400",
+                                "value": 101
+                            },
+                            {
+                                "timestamp": "1684252800",
+                                "value": 81
+                            },
+                            {
+                                "timestamp": "1684339200",
+                                "value": 53
+                            },
+                            {
+                                "timestamp": "1684425600",
+                                "value": 43
+                            },
+                            {
+                                "timestamp": "1684512000",
+                                "value": 46
+                            },
+                            {
+                                "timestamp": "1684598400",
+                                "value": 64
+                            },
+                            {
+                                "timestamp": "1684684800",
+                                "value": 249
+                            },
+                            {
+                                "timestamp": "1684771200",
+                                "value": 210
+                            },
+                            {
+                                "timestamp": "1684857600",
+                                "value": 261
+                            },
+                            {
+                                "timestamp": "1684944000",
+                                "value": 216
+                            },
+                            {
+                                "timestamp": "1685030400",
+                                "value": 201
+                            },
+                            {
+                                "timestamp": "1685116800",
+                                "value": 261
+                            },
+                            {
+                                "timestamp": "1685203200",
+                                "value": 256
+                            },
+                            {
+                                "timestamp": "1685289600",
+                                "value": 321
+                            },
+                            {
+                                "timestamp": "1685376000",
+                                "value": 101
+                            },
+                            {
+                                "timestamp": "1685462400",
+                                "value": 351
+                            },
+                            {
+                                "timestamp": "1685548800",
+                                "value": 228
+                            },
+                            {
+                                "timestamp": "1685635200",
+                                "value": 159
+                            },
+                            {
+                                "timestamp": "1685721600",
+                                "value": 83
+                            },
+                            {
+                                "timestamp": "1685808000",
+                                "value": 103
+                            },
+                            {
+                                "timestamp": "1685894400",
+                                "value": 99
+                            },
+                            {
+                                "timestamp": "1685980800",
+                                "value": 90
+                            },
+                            {
+                                "timestamp": "1686067200",
+                                "value": 403
+                            },
+                            {
+                                "timestamp": "1686153600",
+                                "value": 2234
+                            },
+                            {
+                                "timestamp": "1686240000",
+                                "value": 1462
+                            },
+                            {
+                                "timestamp": "1686326400",
+                                "value": 1095
+                            },
+                            {
+                                "timestamp": "1686412800",
+                                "value": 282
+                            },
+                            {
+                                "timestamp": "1686499200",
+                                "value": 122
+                            },
+                            {
+                                "timestamp": "1686585600",
+                                "value": 185
+                            },
+                            {
+                                "timestamp": "1686672000",
+                                "value": 36
+                            }
+                        ]
+                    }
+                ],
+                "totalSamples": 1
+            }
+        },
+        {
+            "id": "",
+            "alias": "",
+            "dataSource": "FORMULA",
+            "error": "1:1: expected operand, found 'EOF'"
+        }
+    ]
+}

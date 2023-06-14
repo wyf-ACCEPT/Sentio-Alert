@@ -1,0 +1,156 @@
+{
+    "results": [
+        {
+            "id": "a",
+            "alias": "Celer, <- Zksync ({{token}})",
+            "dataSource": "METRICS",
+            "matrix": {
+                "samples": [
+                    {
+                        "metric": {
+                            "name": "swapOutAmount",
+                            "labels": {
+                                "chain": "324",
+                                "token": "USDC"
+                            },
+                            "displayName": "Celer, <- Zksync ({{token}})"
+                        },
+                        "values": [
+                            {
+                                "timestamp": "1684080000",
+                                "value": 46556.334381
+                            },
+                            {
+                                "timestamp": "1684166400",
+                                "value": 12245.924515
+                            },
+                            {
+                                "timestamp": "1684252800",
+                                "value": 30960.251272999998
+                            },
+                            {
+                                "timestamp": "1684339200",
+                                "value": 64160.904363
+                            },
+                            {
+                                "timestamp": "1684425600",
+                                "value": 7951.7882899999995
+                            },
+                            {
+                                "timestamp": "1684512000",
+                                "value": 37775.208195
+                            },
+                            {
+                                "timestamp": "1684598400",
+                                "value": 52620.287213999996
+                            },
+                            {
+                                "timestamp": "1684684800",
+                                "value": 338744.129172
+                            },
+                            {
+                                "timestamp": "1684771200",
+                                "value": 48699.979045
+                            },
+                            {
+                                "timestamp": "1684857600",
+                                "value": 464598.906726
+                            },
+                            {
+                                "timestamp": "1684944000",
+                                "value": 166983.961694
+                            },
+                            {
+                                "timestamp": "1685030400",
+                                "value": 181920.53226399998
+                            },
+                            {
+                                "timestamp": "1685116800",
+                                "value": 123634.978025
+                            },
+                            {
+                                "timestamp": "1685203200",
+                                "value": 23731.810406
+                            },
+                            {
+                                "timestamp": "1685289600",
+                                "value": 78196.808888
+                            },
+                            {
+                                "timestamp": "1685376000",
+                                "value": 69273.346469
+                            },
+                            {
+                                "timestamp": "1685462400",
+                                "value": 377085.165257
+                            },
+                            {
+                                "timestamp": "1685548800",
+                                "value": 379689.598822
+                            },
+                            {
+                                "timestamp": "1685635200",
+                                "value": 249985.743686
+                            },
+                            {
+                                "timestamp": "1685721600",
+                                "value": 13742.421518000001
+                            },
+                            {
+                                "timestamp": "1685808000",
+                                "value": 48545.209689
+                            },
+                            {
+                                "timestamp": "1685894400",
+                                "value": 202732.521012
+                            },
+                            {
+                                "timestamp": "1685980800",
+                                "value": 71958.862541
+                            },
+                            {
+                                "timestamp": "1686067200",
+                                "value": 67110.430275
+                            },
+                            {
+                                "timestamp": "1686153600",
+                                "value": 120132.270211
+                            },
+                            {
+                                "timestamp": "1686240000",
+                                "value": 90332.166059
+                            },
+                            {
+                                "timestamp": "1686326400",
+                                "value": 267538.276942
+                            },
+                            {
+                                "timestamp": "1686412800",
+                                "value": 67238.69906500001
+                            },
+                            {
+                                "timestamp": "1686499200",
+                                "value": 46012.984738
+                            },
+                            {
+                                "timestamp": "1686585600",
+                                "value": 33757.344747
+                            },
+                            {
+                                "timestamp": "1686672000",
+                                "value": 10608.578619
+                            }
+                        ]
+                    }
+                ],
+                "totalSamples": 1
+            }
+        },
+        {
+            "id": "",
+            "alias": "",
+            "dataSource": "FORMULA",
+            "error": "1:1: expected operand, found 'EOF'"
+        }
+    ]
+}
